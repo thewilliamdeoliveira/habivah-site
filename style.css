@@ -104,9 +104,27 @@ summary::after{content:"+";font-size:22px;color:var(--ouro-2);line-height:1}
 details[open] summary::after{content:"–"}
 details p{color:var(--cinza);margin-top:10px}
 
-.cta-final{background:linear-gradient(135deg,var(--navy),var(--navy-3));color:#fff;text-align:center;padding:88px 0}
+.cta-final{background:linear-gradient(135deg,var(--navy),var(--navy-3));color:#fff;padding:88px 0}
 .cta-final h2{color:#fff;font-size:clamp(28px,3.6vw,42px);margin-bottom:12px}
 .cta-final p{color:#B7C3D6;margin-bottom:28px}
+.cta-final a{color:var(--ouro);text-decoration:underline}
+.form-wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.form{background:#fff;color:var(--tinta);border-radius:20px;padding:28px;display:grid;gap:14px;box-shadow:var(--sombra)}
+.form label{display:grid;gap:6px;font-size:13px;font-weight:600;color:var(--cinza)}
+.form input,.form select{font:inherit;font-size:15px;padding:12px 14px;border:1px solid var(--linha);border-radius:10px;background:#fff;color:var(--tinta)}
+.form input:focus,.form select:focus{outline:2px solid var(--ouro);border-color:var(--ouro)}
+.form-2{display:grid;grid-template-columns:1.4fr 1fr;gap:12px}
+.form .btn{width:100%;margin-top:4px}
+.form .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form-msg{min-height:1.2em;font-size:14px;color:var(--navy);margin:0}
+.form-lgpd{font-size:12px;color:var(--cinza);margin:0}
+.form-lgpd a{color:var(--ouro-2);text-decoration:underline}
+.pagina{padding:72px 0 96px}
+.pagina h1{font-size:clamp(30px,4vw,44px);margin-bottom:8px}
+.pagina .data{color:var(--cinza);font-size:14px;margin-bottom:36px}
+.pagina h2{font-size:22px;margin:36px 0 10px}
+.pagina p,.pagina li{color:#2F3A4F;font-size:16px;margin-bottom:12px}
+.pagina ul{padding-left:22px}
 
 .rodape{background:#071629;color:#8C9AB0;font-size:14px}
 .rodape-in{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:28px 0}
@@ -119,6 +137,7 @@ details p{color:var(--cinza);margin-top:10px}
   .b1{left:-4px}.b2{right:-4px}
   .grade,.planos,.passos{grid-template-columns:1fr}
   .wl{flex-direction:column;align-items:flex-start}
+  .form-wrap{grid-template-columns:1fr}
 }
 @media (max-width:520px){
   .topo .btn-sm{padding:8px 14px;font-size:13px}
@@ -126,4 +145,6 @@ details p{color:var(--cinza);margin-top:10px}
   .bolha{position:relative;left:auto;right:auto;bottom:auto;margin-top:12px;max-width:none}
   .tela{transform:none}
   .rodape-in{flex-direction:column;align-items:flex-start}
+  .form-2{grid-template-columns:1fr}
+  .form{padding:20px}
 }

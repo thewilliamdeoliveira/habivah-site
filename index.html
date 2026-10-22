@@ -35,7 +35,7 @@
       <a href="#planos">Planos</a>
       <a href="#faq">Dúvidas</a>
     </nav>
-    <a class="btn btn-ouro btn-sm" href="https://wa.me/5511915190774?text=Ol%C3%A1!%20Quero%20conhecer%20o%20Habivah." target="_blank" rel="noopener">Agendar demonstração</a>
+    <a class="btn btn-ouro btn-sm" href="#demo">Agendar demonstração</a>
   </div>
 </header>
 
@@ -196,11 +196,25 @@
   </div>
 </section>
 
-<section class="cta-final">
-  <div class="wrap">
-    <h2>Veja o Habivah funcionando na sua imobiliária.</h2>
-    <p>Demonstração de 20 minutos, sem compromisso.</p>
-    <a class="btn btn-ouro" href="https://wa.me/5511915190774?text=Ol%C3%A1!%20Quero%20conhecer%20o%20Habivah." target="_blank" rel="noopener">Agendar pelo WhatsApp</a>
+<section class="cta-final" id="demo">
+  <div class="wrap form-wrap">
+    <div class="form-txt">
+      <h2>Veja o Habivah funcionando na sua imobiliária.</h2>
+      <p>Demonstração de 20 minutos, sem compromisso. Preencha ou, se preferir, <a href="https://wa.me/5511915190774?text=Ol%C3%A1!%20Quero%20conhecer%20o%20Habivah." target="_blank" rel="noopener">chame no WhatsApp</a>.</p>
+    </div>
+    <form class="form" id="form-demo" novalidate>
+      <label>Seu nome<input name="nome" required autocomplete="name" placeholder="Como quer ser chamado"></label>
+      <label>Imobiliária<input name="imobiliaria" autocomplete="organization" placeholder="Nome da imobiliária"></label>
+      <div class="form-2">
+        <label>WhatsApp<input name="telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 9 9999-9999"></label>
+        <label>Corretores<select name="corretores"><option value="">Quantos?</option><option>Só eu</option><option>2 a 5</option><option>6 a 10</option><option>11 a 30</option><option>Mais de 30</option></select></label>
+      </div>
+      <label>E-mail<input name="email" type="email" autocomplete="email" placeholder="voce@imobiliaria.com.br"></label>
+      <label class="hp" aria-hidden="true">Site<input name="site_url" tabindex="-1" autocomplete="off"></label>
+      <button class="btn btn-ouro" type="submit">Quero uma demonstração</button>
+      <p class="form-msg" role="status" aria-live="polite"></p>
+      <p class="form-lgpd">Seus dados são usados só para falar com você sobre o Habivah. <a href="/privacidade">Política de privacidade</a>.</p>
+    </form>
   </div>
 </section>
 </main>
@@ -208,9 +222,30 @@
 <footer class="rodape">
   <div class="wrap rodape-in">
     <div class="marca"><svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><path d="M4 15 16 5l12 10v12a1 1 0 0 1-1 1h-7v-8h-8v8H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="16" cy="14" r="2.2" fill="#C9A45C"/></svg><span>Habivah</span></div>
-    <p>© <span id="ano">2026</span> Habivah. Sistema para imobiliárias.</p>
+    <p>© <span id="ano">2026</span> Habivah. Sistema para imobiliárias. · <a href="/termos">Termos</a> · <a href="/privacidade">Privacidade</a></p>
   </div>
 </footer>
-<script>document.getElementById("ano").textContent=new Date().getFullYear()</script>
+<script>
+document.getElementById("ano").textContent=new Date().getFullYear();
+(function(){
+  var f=document.getElementById("form-demo"); if(!f) return;
+  var msg=f.querySelector(".form-msg"), btn=f.querySelector("button");
+  var utm={}; try{ new URLSearchParams(location.search).forEach(function(v,k){ if(/^(utm_|gclid|fbclid)/.test(k)) utm[k]=v; }); }catch(e){}
+  f.addEventListener("submit", async function(ev){
+    ev.preventDefault();
+    var d=Object.fromEntries(new FormData(f).entries());
+    if(!d.nome||d.nome.trim().length<2){ msg.textContent="Informe seu nome."; return; }
+    var tel=(d.telefone||"").replace(/\D/g,"");
+    if(tel.length<10 && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email||"")){ msg.textContent="Informe um WhatsApp ou e-mail válido."; return; }
+    btn.disabled=true; msg.textContent="Enviando…";
+    try{
+      var r=await fetch("https://rzsotlrmjrkslsltnntg.supabase.co/functions/v1/habivah-interesse",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({},d,{utm:utm,pagina:location.pathname+location.search}))});
+      var j=await r.json().catch(function(){return {}});
+      if(r.ok && j.ok){ f.reset(); msg.textContent="Recebido! Vamos falar com você em breve pelo WhatsApp."; }
+      else { msg.textContent=j.error||"Não foi possível enviar agora. Chame no WhatsApp."; btn.disabled=false; }
+    }catch(e){ msg.textContent="Sem conexão agora. Chame no WhatsApp."; btn.disabled=false; }
+  });
+})();
+</script>
 </body>
 </html>
