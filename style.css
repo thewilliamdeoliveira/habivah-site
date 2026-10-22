@@ -148,3 +148,22 @@ details p{color:var(--cinza);margin-top:10px}
   .form-2{grid-template-columns:1fr}
   .form{padding:20px}
 }
+
+/* blog */
+.posts{grid-template-columns:repeat(3,1fr)}
+.posts.dois{grid-template-columns:repeat(2,1fr)}
+.post h3{font-size:20px}
+.post h3 a:hover{color:var(--ouro-2)}
+.post .kicker{margin-bottom:8px}
+.post .meta{margin-top:14px;font-size:13px;color:var(--cinza)}
+.crumb{font-size:13px;color:var(--cinza);margin-bottom:18px}
+.crumb a:hover{color:var(--navy)}
+.pagina ol{padding-left:22px}
+.pagina .kicker{margin-bottom:10px}
+.cta-post{margin-top:48px;padding:32px;border-radius:var(--raio);background:var(--navy);color:#fff}
+.cta-post h2{color:#fff;margin-top:0}
+.cta-post p{color:#C8D2E2}
+.cta-post .btn{margin:6px 8px 0 0}
+.cta-post .btn-linha{color:#fff;border-color:rgba(255,255,255,.4)}
+.mais{margin:64px 0 20px}
+@media (max-width:960px){.posts,.posts.dois{grid-template-columns:1fr}}
