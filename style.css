@@ -167,3 +167,5 @@ details p{color:var(--cinza);margin-top:10px}
 .cta-post .btn-linha{color:#fff;border-color:rgba(255,255,255,.4)}
 .mais{margin:64px 0 20px}
 @media (max-width:960px){.posts,.posts.dois{grid-template-columns:1fr}}
+
+.nota-planos{margin-top:20px;font-size:14px;color:var(--cinza);max-width:760px}
