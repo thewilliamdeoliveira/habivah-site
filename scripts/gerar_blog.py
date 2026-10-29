@@ -132,6 +132,36 @@ ARTIGOS = [
 <h2>Experimente antes</h2>
 <p>Veja <a href="/#exemplos">modelos de sites funcionando</a>, cada um com tema e identidade própria, e <a href="/#demo">peça uma demonstração</a> com a sua marca.</p>
 """),
+ dict(slug="quanto-custa-sistema-para-imobiliaria", data="2026-10-29", cat="Preços", min=6,
+  titulo="Quanto custa um sistema para imobiliária em 2026 (e o que muda sem mensalidade)",
+  resumo="Os modelos de cobrança que existem no mercado, o que costuma vir escondido no preço e como comparar propostas de verdade.",
+  corpo="""
+<p>Quem pesquisa sistema para imobiliária encontra de tudo: mensalidade por usuário, por imóvel, por módulo, pacotes anuais e taxas de implantação. O preço da página raramente é o preço que você paga no fim do ano. Este guia mostra como comparar.</p>
+<h2>Os três modelos que existem</h2>
+<ul>
+<li><b>Mensalidade por usuário:</b> comum em CRMs genéricos. Barato para começar, caro quando a equipe cresce — cada corretor novo é um custo fixo, use ele o sistema ou não.</li>
+<li><b>Mensalidade por plano:</b> faixas de imóveis, leads ou "conversas" por mês. O risco é bater no limite no mês bom e pagar upgrade justamente quando estava vendendo.</li>
+<li><b>Implantação + uso:</b> você paga uma vez pela implantação (importação, marca, domínio, treinamento) e depois só o que usa. É o modelo do Habivah: sem mensalidade, hospedagem anual e créditos para a inteligência artificial.</li>
+</ul>
+<h2>O que costuma vir escondido</h2>
+<ul>
+<li>Integração com portais, WhatsApp ou site cobrada à parte.</li>
+<li>Limite de fotos, de imóveis ou de "contatos" que estoura rápido.</li>
+<li>Implantação e migração de dados "sob consulta" — ou seja, você faz sozinho.</li>
+<li>Fidelidade de 12 meses com multa, e exportação de dados difícil na hora de sair.</li>
+<li>Atendimento por IA cobrado por mensagem (uma conversa comum tem 10 a 20 mensagens).</li>
+</ul>
+<h2>Como fazer a conta certa</h2>
+<ol>
+<li>Some 24 meses de uso, não 1: implantação + mensalidades + extras + upgrades prováveis.</li>
+<li>Conte a equipe que você terá daqui a um ano, não a de hoje.</li>
+<li>Pergunte o que acontece se você parar de pagar: perde os dados? perde o site? fica só lendo?</li>
+<li>Peça para ver o sistema rodando em uma imobiliária de verdade, com leads reais.</li>
+</ol>
+<h2>Um exemplo com números</h2>
+<p>Uma imobiliária com 6 corretores em um CRM de R$ 149 por usuário paga cerca de <b>R$ 21.500 em dois anos</b> só de mensalidade — sem site, sem blog, sem atendimento automático. No modelo de implantação, o mesmo período custa a implantação (R$ 5 mil ou R$ 10 mil, conforme o pacote), uma anuidade de hospedagem no segundo ano e o uso de IA, que no dia a dia fica em dezenas de reais por mês, não centenas.</p>
+<p>Os valores do Habivah estão abertos na <a href="/#planos">página de planos</a>: implantação Essencial ou Completa, hospedagem anual e créditos de R$ 1 — e você liga e desliga cada automação no painel. Quer uma proposta para a sua imobiliária? <a href="https://wa.me/5511915190774?text=Ol%C3%A1!%20Quero%20uma%20proposta%20do%20Habivah." target="_blank" rel="noopener">Chame no WhatsApp</a>.</p>
+"""),
 ]
 
 def esc(s): return html.escape(s, quote=True)
@@ -178,7 +208,7 @@ def head(title, desc, canon, extra=""):
 FOOT = f'''<footer class="rodape">
   <div class="wrap rodape-in">
     <div class="marca">{LOGO % (22,22)}<span>Habivah</span></div>
-    <p>© 2026 Habivah. Sistema para imobiliárias. · <a href="/blog">Blog</a> · <a href="/termos">Termos</a> · <a href="/privacidade">Privacidade</a> · <a href="/sobre">Sobre</a></p>
+    <p>© 2026 Habivah. Sistema para imobiliárias. · <a href="/blog">Blog</a> · <a href="/termos">Termos</a> · <a href="/privacidade">Privacidade</a> · <a href="/sobre">Sobre</a> · <a href="/ajuda">Ajuda</a></p>
   </div>
 </footer>
 </body>
@@ -216,7 +246,7 @@ def gerar():
 ''' + FOOT
         open(os.path.join(ROOT, "blog", a["slug"] + ".html"), "w", encoding="utf-8").write(h)
     # sitemap
-    urls = ["", "sobre", "termos", "privacidade", "blog"] + ["blog/" + a["slug"] for a in ARTIGOS]
+    urls = ["", "sobre", "ajuda", "termos", "privacidade", "blog"] + ["blog/" + a["slug"] for a in ARTIGOS]
     x = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "".join(f'<url><loc>https://habivah.com/{u}</loc></url>' for u in urls) + '</urlset>\n'
     open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8").write(x)
 
