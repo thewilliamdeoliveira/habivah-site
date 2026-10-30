@@ -18,6 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <script src="/pixel.js" defer></script>
+<script src="/lead.js" defer></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Habivah","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://habivah.com/","description":"Sistema para imobiliárias: CRM, site com blog automático, atendente de WhatsApp com IA e cadastro inteligente de imóveis com IA.","offers":{"@type":"AggregateOffer","priceCurrency":"BRL","lowPrice":"5000","highPrice":"10000"}}
 </script>
@@ -323,12 +324,13 @@ document.getElementById("ano").textContent=new Date().getFullYear();
     var d=Object.fromEntries(new FormData(f).entries());
     if(!d.nome||d.nome.trim().length<2){ msg.textContent="Informe seu nome."; return; }
     var tel=(d.telefone||"").replace(/\D/g,"");
-    if(tel.length<10 && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email||"")){ msg.textContent="Informe um WhatsApp ou e-mail válido."; return; }
+    if(tel.length<10){ msg.textContent="Informe seu WhatsApp com DDD."; return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email||"")){ msg.textContent="Informe um e-mail válido."; return; }
     btn.disabled=true; msg.textContent="Enviando…";
     try{
       var r=await fetch("https://rzsotlrmjrkslsltnntg.supabase.co/functions/v1/habivah-interesse",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({},d,{utm:utm,pagina:location.pathname+location.search}))});
       var j=await r.json().catch(function(){return {}});
-      if(r.ok && j.ok){ if(window.fbq) fbq("track","Lead",{content_name:"demo-form"}); f.reset(); msg.textContent="Recebido! Vamos falar com você em breve pelo WhatsApp."; }
+      if(r.ok && j.ok){ if(window.fbq) fbq("track","Lead",{content_name:"demo-form"}); f.reset(); msg.textContent="Recebido! Abrindo o WhatsApp…"; if(window.habivahAfterLead) habivahAfterLead(); }
       else { msg.textContent=j.error||"Não foi possível enviar agora. Chame no WhatsApp."; btn.disabled=false; }
     }catch(e){ msg.textContent="Sem conexão agora. Chame no WhatsApp."; btn.disabled=false; }
   });

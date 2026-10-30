@@ -6,3 +6,5 @@
   Cache-Control: public, max-age=3600
 /pixel.js
   Cache-Control: public, max-age=3600
+/lead.js
+  Cache-Control: public, max-age=3600
