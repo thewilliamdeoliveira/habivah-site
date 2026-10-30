@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Habivah — Painel de leads</title>
+<title>Habivah — Painel</title>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
 :root{--navy:#0B1F3A;--ouro:#C9A45C;--tinta:#14213A;--cinza:#5B6678;--linha:#E3E7EE;--suave:#F6F7FA;--verde:#1a7f37;--verm:#b3261e}
@@ -73,8 +73,11 @@ function render(){
  app.textContent="";
  var sair=el("button",{text:"Sair"});sair.onclick=async function(){await db.auth.signOut();login();};
  var ts=el("button",{text:"Trocar senha"});ts.onclick=function(){novaSenha(true);};
- app.appendChild(el("div",{class:"top"},[el("b",{text:"Habivah · Leads"}),el("span",{},[ts,document.createTextNode(" "),sair])]));
+ var tabs=el("span",{style:"display:flex;gap:6px;flex-wrap:wrap"});[["leads","Leads"],["blog","Blog"],["email","E-mails"]].forEach(function(a){var b=el("button",{text:a[1],style:aba===a[0]?"background:#C9A45C;color:#0B1F3A;border-color:#C9A45C":""});b.onclick=function(){aba=a[0];render();};tabs.appendChild(b);});
+ app.appendChild(el("div",{class:"top"},[el("b",{text:"Habivah"}),tabs,el("span",{},[ts,document.createTextNode(" "),sair])]));
  var w=el("div",{class:"wrap"});app.appendChild(w);
+ if(aba==="blog"){blogView(w);return;}
+ if(aba==="email"){emailView(w);return;}
  var agora=Date.now(),dia=864e5;
  function n(ms){return leads.filter(function(l){return agora-new Date(l.created_at)<ms;}).length;}
  var hojeIni=new Date();hojeIni.setHours(0,0,0,0);
@@ -114,11 +117,108 @@ function card(l){
  var acts=el("div",{class:"acts"},[sel]);
  if(d)acts.appendChild(el("a",{class:"btn s",href:"https://wa.me/"+d,target:"_blank",rel:"noopener",text:"WhatsApp"}));
  if(l.email)acts.appendChild(el("a",{class:"btn s",href:"mailto:"+l.email,text:"E-mail"}));
- var info=[["Telefone",l.telefone],["E-mail",l.email],["Corretores",l.corretores],["Plano",l.plano],["Botão",cta(l)],["Canal",canal(l)]].filter(function(x){return x[1];}).map(function(x){return el("span",{},[el("b",{text:x[0]}),document.createTextNode(x[1])]);});
+ var info=[["Telefone",l.telefone],["E-mail",l.email],["Corretores",l.corretores],["Plano",l.plano],["Botão",cta(l)],["Canal",canal(l)],["Newsletter",l.email?(l.email_optin===false?"cancelou":"aceita"):""]].filter(function(x){return x[1];}).map(function(x){return el("span",{},[el("b",{text:x[0]}),document.createTextNode(x[1])]);});
  var u=l.utm||{};var camp=u.utm_campaign?el("div",{class:"m",text:"Campanha: "+u.utm_campaign+(u.utm_content?" · "+u.utm_content:"")}):null;
  return el("div",{class:"lead"},[el("h3",{},[document.createTextNode(l.nome+" "),el("span",{class:"tag "+l.status,text:(STATUS.filter(function(s){return s[0]===l.status;})[0]||[0,l.status])[1]})]),
   el("div",{class:"m",text:(l.imobiliaria?l.imobiliaria+" · ":"")+fmt(l.created_at)}),el("div",{class:"row"},info),
   l.mensagem?el("div",{class:"m",text:l.mensagem,style:"margin-top:8px"}):null,camp,acts,nota]);
+}
+var aba="leads",posts=[],cur=null,news=[];
+var SBU="https://rzsotlrmjrkslsltnntg.supabase.co",SBK="sb_publishable_smEE1n3Srugt98xxmNZ_4g_q5A_0ddN";
+async function chamar(nome,corpo){var s=(await db.auth.getSession()).data.session;if(!s)return{ok:false,error:"Sessão expirada. Entre de novo."};
+ try{var r=await fetch(SBU+"/functions/v1/"+nome,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token,apikey:SBK},body:JSON.stringify(corpo)});return await r.json();}catch(e){return{ok:false,error:"Sem conexão."};}}
+function slugify(s){return s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,80);}
+function campo(rot,nome,tipo,val,extra){var i=tipo==="textarea"?el("textarea",{name:nome}):el("input",{name:nome,type:tipo||"text"});i.value=val==null?"":val;if(extra)for(var k in extra)i.setAttribute(k,extra[k]);return el("label",{text:rot},[i]);}
+function msgBox(){return el("div",{class:"err",text:"",style:"min-height:20px"});}
+function say(b,t,ok){b.style.color=ok?"#1a7f37":"#b3261e";b.textContent=t;}
+
+async function blogView(w){
+ var r=await db.from("habivah_blog_posts").select("*").order("created_at",{ascending:false});
+ posts=r.data||[];
+ var g=el("div",{class:"lead"},[el("h3",{text:"Gerar artigo com IA"}),el("div",{class:"m",text:"Diga o tema; a IA escreve um rascunho para você revisar antes de publicar."})]);
+ var ft=campo("Tema do artigo","tema","text","",{placeholder:"Ex.: Como o financiamento imobiliário muda com a nova taxa Selic"});
+ var fk=campo("Palavra-chave (opcional)","kw","text","",{placeholder:"Ex.: financiamento imobiliário"});
+ var bt=el("button",{class:"btn",type:"button",text:"Gerar rascunho",style:"margin-top:10px"}),mg=msgBox();
+ bt.onclick=async function(){var tema=ft.querySelector("input").value.trim();if(tema.length<5){say(mg,"Descreva o tema.");return;}
+  bt.disabled=true;say(mg,"Escrevendo… leva de 20 a 40 segundos.",true);mg.style.color="#5B6678";
+  var j=await chamar("habivah-blog-gerar",{tema:tema,palavra_chave:fk.querySelector("input").value.trim()});
+  bt.disabled=false;if(!j.ok){say(mg,j.error||"Falhou.");return;}
+  cur=j.post;cur.status="rascunho";cur.id=null;render();};
+ [ft,fk,bt,mg].forEach(function(x){g.appendChild(x);});w.appendChild(g);
+ if(cur)w.appendChild(editor());
+ w.appendChild(el("h3",{text:"Artigos ("+posts.length+")",style:"margin:20px 0 8px"}));
+ if(!posts.length)w.appendChild(el("div",{class:"vazio",text:"Nenhum artigo criado aqui ainda. Os 7 artigos fixos do site continuam publicados."}));
+ posts.forEach(function(p){
+  var ed=el("button",{class:"btn s",type:"button",text:"Editar"});ed.onclick=function(){cur=JSON.parse(JSON.stringify(p));render();window.scrollTo(0,0);};
+  var pub=el("button",{class:"btn s",type:"button",text:p.status==="publicado"?"Despublicar":"Publicar"});
+  pub.onclick=async function(){var novo=p.status==="publicado"?"rascunho":"publicado";var u={status:novo,updated_at:new Date().toISOString()};if(novo==="publicado"&&!p.publicado_em)u.publicado_em=new Date().toISOString();
+   var x=await db.from("habivah_blog_posts").update(u).eq("id",p.id);if(x.error){alert("Não salvou: "+x.error.message);return;}render();};
+  var rm=el("button",{class:"btn s",type:"button",text:"Excluir"});rm.onclick=async function(){if(!confirm("Excluir \""+p.titulo+"\"?"))return;var x=await db.from("habivah_blog_posts").delete().eq("id",p.id);if(x.error){alert(x.error.message);return;}if(cur&&cur.id===p.id)cur=null;render();};
+  var acts=el("div",{class:"acts"},[ed,pub]);
+  if(p.status==="publicado")acts.appendChild(el("a",{class:"btn s",href:"/blog/"+p.slug,target:"_blank",rel:"noopener",text:"Ver no site"}));
+  acts.appendChild(rm);
+  w.appendChild(el("div",{class:"lead"},[el("h3",{},[document.createTextNode(p.titulo+" "),el("span",{class:"tag "+(p.status==="publicado"?"cliente":"novo"),text:p.status})]),el("div",{class:"m",text:p.categoria+" · "+fmt(p.created_at)}),acts]));
+ });
+}
+function editor(){
+ var p=cur,f=el("form",{class:"lead"},[el("h3",{text:p.id?"Editar artigo":"Rascunho gerado — revise e salve"})]);
+ var fs=[campo("Título","titulo","text",p.titulo),campo("Endereço (slug)","slug","text",p.slug),campo("Categoria","categoria","text",p.categoria),campo("Resumo (aparece na lista)","resumo","textarea",p.resumo),campo("Descrição para o Google (até 155)","meta_description","textarea",p.meta_description),campo("Conteúdo (HTML: h2, h3, p, ul, li)","corpo_html","textarea",p.corpo_html,{rows:"16",style:"font-family:ui-monospace,monospace;font-size:13px"})];
+ fs.forEach(function(x){f.appendChild(x);});
+ var mg=msgBox();var sv=el("button",{class:"btn",type:"submit",text:"Salvar rascunho"});
+ var pb=el("button",{class:"btn s",type:"button",text:"Salvar e publicar"});
+ var pv=el("button",{class:"btn s",type:"button",text:"Pré-visualizar"});
+ var cc=el("button",{class:"btn s",type:"button",text:"Fechar"});
+ f.appendChild(el("div",{class:"acts"},[sv,pb,pv,cc]));f.appendChild(mg);
+ var prev=el("iframe",{sandbox:"",style:"display:none;width:100%;height:420px;border:1px solid #E3E7EE;border-radius:8px;margin-top:10px;background:#fff"});f.appendChild(prev);
+ function ler(){["titulo","slug","categoria","resumo","meta_description","corpo_html"].forEach(function(k){p[k]=f.elements[k].value.trim();});p.slug=slugify(p.slug||p.titulo);}
+ pv.onclick=function(){ler();prev.style.display="block";prev.srcdoc='<body style="font-family:Georgia,serif;max-width:680px;margin:20px auto;padding:0 16px;line-height:1.6"><h1>'+p.titulo.replace(/</g,"&lt;")+'</h1>'+p.corpo_html.replace(/<script[\s\S]*?<\/script>/gi,"");};
+ cc.onclick=function(){cur=null;render();};
+ async function salvar(pub){ler();if(p.titulo.length<5||p.corpo_html.length<50||!p.slug){say(mg,"Preencha título e conteúdo.");return;}
+  var words=p.corpo_html.replace(/<[^>]+>/g," ").split(/\s+/).length;
+  var row={slug:p.slug,titulo:p.titulo,resumo:p.resumo,meta_description:p.meta_description,categoria:p.categoria||"Mercado",corpo_html:p.corpo_html,faq:p.faq||[],palavra_chave:p.palavra_chave||null,min_leitura:Math.max(2,Math.round(words/200)),updated_at:new Date().toISOString()};
+  if(pub){row.status="publicado";if(!p.publicado_em)row.publicado_em=new Date().toISOString();}
+  var x=p.id?await db.from("habivah_blog_posts").update(row).eq("id",p.id).select().single():await db.from("habivah_blog_posts").insert(row).select().single();
+  if(x.error){say(mg,/duplicate|unique/i.test(x.error.message)?"Já existe um artigo com esse endereço. Mude o slug.":"Não salvou: "+x.error.message);return;}
+  cur=null;render();}
+ f.addEventListener("submit",function(ev){ev.preventDefault();salvar(false);});pb.onclick=function(){salvar(true);};
+ return f;
+}
+
+async function emailView(w){
+ var r=await db.from("habivah_blog_posts").select("id,titulo,publicado_em").eq("status","publicado").order("publicado_em",{ascending:false}).limit(10);
+ var pubs=r.data||[];
+ var h=await db.from("habivah_newsletters").select("assunto,enviados,enviada_em").order("created_at",{ascending:false}).limit(10);
+ var hist=h.data||[];
+ var optin=leads.filter(function(l){return l.email&&l.email_optin!==false;}),vis={};optin=optin.filter(function(l){var e=l.email.toLowerCase();if(vis[e])return false;vis[e]=1;return true;});
+ var sem=leads.filter(function(l){return l.email&&l.email_optin===false;}).length;
+ w.appendChild(el("div",{class:"kpis"},[kpi2("Na lista de e-mail",optin.length),kpi2("Cancelaram",sem),kpi2("Newsletters enviadas",hist.length)]));
+ var ex=el("button",{class:"btn s",type:"button",text:"Exportar lista (CSV) para remarketing",style:"margin:14px 0"});
+ ex.onclick=function(){var linhas=['email,nome,telefone,corretores'].concat(optin.map(function(l){return [l.email,l.nome,l.telefone,l.corretores].map(function(v){return '"'+String(v||"").replace(/"/g,'""')+'"';}).join(",");}));
+  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["﻿"+linhas.join("\n")],{type:"text/csv"}));a.download="lista-email-habivah.csv";a.click();};
+ w.appendChild(ex);
+ var f=el("form",{class:"lead"},[el("h3",{text:"Newsletter semanal"}),el("div",{class:"m",text:"Novidades do mercado + os artigos que você marcar. Vai só para quem aceitou receber e traz link para cancelar."})]);
+ f.appendChild(campo("Assunto","assunto","text","Novidades do mercado imobiliário desta semana"));
+ f.appendChild(campo("Texto (separe parágrafos com linha em branco)","intro","textarea","",{rows:"8",placeholder:"Olá! Esta semana no mercado imobiliário…"}));
+ var box=el("div",{style:"margin-top:10px;font-size:14px"},[el("b",{text:"Artigos para incluir:"})]);
+ if(!pubs.length)box.appendChild(el("div",{class:"m",text:"Nenhum artigo publicado pelo painel ainda."}));
+ pubs.forEach(function(p,i){var c=el("input",{type:"checkbox",value:p.id,style:"width:auto;margin:0 8px 0 0"});if(i===0)c.checked=true;box.appendChild(el("label",{style:"display:flex;align-items:center;font-weight:400;margin-top:6px"},[c,document.createTextNode(p.titulo)]));});
+ f.appendChild(box);
+ var te=campo("Enviar teste para","para","email","thewilliamdeoliveira@gmail.com");f.appendChild(te);
+ var mg=msgBox();var bt=el("button",{class:"btn s",type:"button",text:"Enviar teste"}),bs=el("button",{class:"btn",type:"submit",text:"Enviar para a lista ("+optin.length+")"});
+ f.appendChild(el("div",{class:"acts"},[bt,bs]));f.appendChild(mg);
+ function corpo(acao){return{acao:acao,assunto:f.elements.assunto.value.trim(),intro:f.elements.intro.value.trim(),post_ids:[].slice.call(box.querySelectorAll("input:checked")).map(function(c){return c.value;}),para:f.elements.para.value.trim()};}
+ bt.onclick=async function(){bt.disabled=true;say(mg,"Enviando teste…",true);mg.style.color="#5B6678";var j=await chamar("habivah-newsletter",corpo("teste"));bt.disabled=false;say(mg,j.ok?"Teste enviado. Confira a caixa de entrada (e o spam).":(j.error||"Falhou."),j.ok);};
+ f.addEventListener("submit",async function(ev){ev.preventDefault();
+  if(!optin.length){say(mg,"Ainda não há contatos na lista.");return;}
+  if(!confirm("Enviar esta newsletter para "+optin.length+" contato(s) agora? Não dá para desfazer."))return;
+  bs.disabled=true;say(mg,"Enviando…",true);mg.style.color="#5B6678";
+  var j=await chamar("habivah-newsletter",corpo("enviar"));bs.disabled=false;
+  say(mg,j.ok?"Enviado para "+j.enviados+" contato(s)"+(j.falhas?" ("+j.falhas+" falharam)":"")+".":(j.error||"Falhou."),j.ok);if(j.ok)setTimeout(render,1500);});
+ w.appendChild(f);
+ w.appendChild(el("h3",{text:"Histórico",style:"margin:20px 0 8px"}));
+ if(!hist.length)w.appendChild(el("div",{class:"vazio",text:"Nenhuma newsletter enviada ainda."}));
+ hist.forEach(function(n){w.appendChild(el("div",{class:"lead"},[el("h3",{text:n.assunto}),el("div",{class:"m",text:fmt(n.enviada_em)+" · "+n.enviados+" enviados"})]));});
+ function kpi2(t,v){return el("div",{class:"kpi"},[el("small",{text:t}),el("div",{text:String(v)})]);}
 }
 function exportar(){
  var cols=["created_at","nome","imobiliaria","telefone","email","corretores","plano","status","pagina","notas"];

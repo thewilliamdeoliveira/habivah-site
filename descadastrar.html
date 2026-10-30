@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Cancelar inscrição — Habivah</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>body{margin:0;font-family:Inter,system-ui,sans-serif;background:#F6F7FA;color:#14213A;display:grid;place-items:center;min-height:100vh}.b{max-width:420px;margin:16px;background:#fff;padding:32px;border-radius:16px;box-shadow:0 10px 40px -15px rgba(11,31,58,.35);text-align:center}h1{font-family:Georgia,serif;color:#0B1F3A;font-size:24px;margin:0 0 10px}a{color:#8a6a1f}</style></head>
+<body><div class="b"><h1 id="t">Cancelando…</h1><p id="m">Só um instante.</p><p><a href="/">Voltar ao site</a></p></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(async function(){
+ var t=new URLSearchParams(location.search).get("t"),T=document.getElementById("t"),M=document.getElementById("m");
+ if(!/^[0-9a-f-]{36}$/i.test(t||"")){T.textContent="Link inválido";M.textContent="Para sair da lista, responda qualquer e-mail nosso pedindo o cancelamento.";return;}
+ var db=supabase.createClient("https://rzsotlrmjrkslsltnntg.supabase.co","sb_publishable_smEE1n3Srugt98xxmNZ_4g_q5A_0ddN");
+ var r=await db.rpc("habivah_descadastrar",{t:t});
+ if(r.error||!r.data){T.textContent="Não foi possível cancelar";M.textContent="Responda qualquer e-mail nosso pedindo o cancelamento e resolvemos.";return;}
+ T.textContent="Inscrição cancelada";M.textContent="Você não receberá mais as novidades do Habivah por e-mail.";
+})();
+</script></body></html>

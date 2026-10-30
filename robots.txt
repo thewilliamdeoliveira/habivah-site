@@ -2,4 +2,5 @@ User-agent: *
 Allow: /
 Disallow: /proposta
 Disallow: /admin
+Disallow: /descadastrar
 Sitemap: https://habivah.com/sitemap.xml

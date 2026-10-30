@@ -298,6 +298,7 @@
         <label>Corretores<select name="corretores"><option value="">Quantos?</option><option>Só eu</option><option>2 a 5</option><option>6 a 10</option><option>11 a 30</option><option>Mais de 30</option></select></label>
       </div>
       <label>E-mail<input name="email" type="email" autocomplete="email" placeholder="voce@imobiliaria.com.br"></label>
+      <label style="display:flex;gap:8px;align-items:flex-start;font-size:13px;font-weight:400"><input type="checkbox" name="email_optin" checked style="width:auto;margin-top:3px"> Quero receber novidades do mercado imobiliário por e-mail (1 vez por semana). Cancele quando quiser.</label>
       <label class="hp" aria-hidden="true">Site<input name="site_url" tabindex="-1" autocomplete="off"></label>
       <button class="btn btn-ouro" type="submit">Quero uma demonstração</button>
       <p class="form-msg" role="status" aria-live="polite"></p>
@@ -326,6 +327,7 @@ document.getElementById("ano").textContent=new Date().getFullYear();
     var tel=(d.telefone||"").replace(/\D/g,"");
     if(tel.length<10){ msg.textContent="Informe seu WhatsApp com DDD."; return; }
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email||"")){ msg.textContent="Informe um e-mail válido."; return; }
+    d.email_optin=!!d.email_optin;
     btn.disabled=true; msg.textContent="Enviando…";
     try{
       var r=await fetch("https://rzsotlrmjrkslsltnntg.supabase.co/functions/v1/habivah-interesse",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({},d,{utm:utm,pagina:location.pathname+location.search}))});
