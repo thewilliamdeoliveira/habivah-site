@@ -162,6 +162,28 @@ ARTIGOS = [
 <p>Uma imobiliária com 6 corretores em um CRM de R$ 149 por usuário paga cerca de <b>R$ 21.500 em dois anos</b> só de mensalidade — sem site, sem blog, sem atendimento automático. No modelo de implantação, o mesmo período custa a implantação (R$ 5 mil ou R$ 10 mil, conforme o pacote), uma anuidade de hospedagem no segundo ano e o uso de IA, que no dia a dia fica em dezenas de reais por mês, não centenas.</p>
 <p>Os valores do Habivah estão abertos na <a href="/#planos">página de planos</a>: implantação Essencial ou Completa, hospedagem anual e créditos de R$ 1 — e você liga e desliga cada automação no painel. Quer uma proposta para a sua imobiliária? <a href="https://wa.me/5511915190774?text=Ol%C3%A1!%20Quero%20uma%20proposta%20do%20Habivah." target="_blank" rel="noopener">Chame no WhatsApp</a>.</p>
 """),
+ dict(slug="seguranca-dados-sistema-imobiliario", data="2026-10-30", cat="Segurança", min=6,
+  titulo="Segurança de dados no sistema da imobiliária: 7 perguntas antes de contratar",
+  resumo="Leads, proprietários e comissões são o patrimônio da imobiliária. O que perguntar ao fornecedor para não descobrir um problema tarde demais.",
+  corpo="""
+<p>Ao escolher um sistema, a conversa costuma girar em torno de recursos e preço. Mas o que fica guardado lá dentro — leads, dados de proprietários, comissões, conversas de WhatsApp — vale mais do que o sistema. E, desde a LGPD, a imobiliária responde pelo que acontece com esses dados. Estas são as perguntas que vale fazer antes de assinar.</p>
+<h2>1. Os meus dados ficam separados dos de outras imobiliárias?</h2>
+<p>Quase todo sistema na nuvem guarda várias empresas no mesmo lugar. Isso não é problema, desde que a separação seja garantida no próprio banco de dados, e não só na tela. Pergunte: se alguém de outra imobiliária tentar acessar um lead meu diretamente, o que impede? A resposta certa fala em regras de acesso por empresa aplicadas a todos os dados, inclusive fotos e arquivos.</p>
+<h2>2. Quem da minha equipe vê o quê?</h2>
+<p>Corretor não precisa ver comissão de colega nem dados pessoais do proprietário. Peça para ver os papéis disponíveis (administrador, gerente, corretor) e o que cada um enxerga. Se a resposta for "todo mundo vê tudo", o risco de vazamento interno é seu.</p>
+<h2>3. As automações respeitam essa separação?</h2>
+<p>Atendimento automático no WhatsApp, e-mails, follow-up e avisos no celular rodam "por trás", fora da tela. É justamente aí que separações frágeis falham. Pergunte se as automações usam a sua marca, as suas contas e só os seus contatos.</p>
+<h2>4. Como funciona a LGPD na prática?</h2>
+<p>Seu cliente tem direito de pedir uma cópia dos dados dele e a exclusão. O sistema deve permitir atender esses pedidos sem planilha nem gambiarra, e respeitar quem pediu para não receber e-mails.</p>
+<h2>5. Tem verificação em duas etapas?</h2>
+<p>Senha vaza. Com código no celular além da senha, uma senha vazada sozinha não abre o painel. Confirme se o sistema oferece e se você pode exigir para a equipe.</p>
+<h2>6. Há backup e monitoramento?</h2>
+<p>Pergunte com que frequência os dados são copiados, onde ficam essas cópias e quem é avisado quando algo dá erro. "Não precisa se preocupar" não é resposta.</p>
+<h2>7. Se eu sair, levo os meus dados?</h2>
+<p>Exportação de imóveis e leads deve ser simples e estar no painel. Desconfie de contrato que dificulta a saída: dado preso é custo escondido.</p>
+<h2>Como o Habivah responde</h2>
+<p>Cada imobiliária fica em um espaço próprio, com separação aplicada no banco de dados, nos arquivos e nas automações, e testes automáticos conferem essa separação a cada alteração do sistema. Os detalhes estão na página <a href="/seguranca">Segurança e privacidade</a>. Quer ver funcionando? <a href="https://wa.me/5511915190774?text=Ol%C3%A1!%20Quero%20conhecer%20o%20Habivah." target="_blank" rel="noopener">Chame no WhatsApp</a>.</p>
+"""),
 ]
 
 def esc(s): return html.escape(s, quote=True)
@@ -208,7 +230,7 @@ def head(title, desc, canon, extra=""):
 FOOT = f'''<footer class="rodape">
   <div class="wrap rodape-in">
     <div class="marca">{LOGO % (22,22)}<span>Habivah</span></div>
-    <p>© 2026 Habivah. Sistema para imobiliárias. · <a href="/blog">Blog</a> · <a href="/termos">Termos</a> · <a href="/privacidade">Privacidade</a> · <a href="/sobre">Sobre</a> · <a href="/ajuda">Ajuda</a></p>
+    <p>© 2026 Habivah. Sistema para imobiliárias. · <a href="/blog">Blog</a> · <a href="/termos">Termos</a> · <a href="/privacidade">Privacidade</a> · <a href="/seguranca">Segurança</a> · <a href="/sobre">Sobre</a> · <a href="/ajuda">Ajuda</a></p>
   </div>
 </footer>
 </body>
@@ -246,7 +268,7 @@ def gerar():
 ''' + FOOT
         open(os.path.join(ROOT, "blog", a["slug"] + ".html"), "w", encoding="utf-8").write(h)
     # sitemap
-    urls = ["", "sobre", "ajuda", "termos", "privacidade", "blog"] + ["blog/" + a["slug"] for a in ARTIGOS]
+    urls = ["", "sobre", "ajuda", "termos", "privacidade", "seguranca", "blog"] + ["blog/" + a["slug"] for a in ARTIGOS]
     x = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "".join(f'<url><loc>https://habivah.com/{u}</loc></url>' for u in urls) + '</urlset>\n'
     open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8").write(x)
 
