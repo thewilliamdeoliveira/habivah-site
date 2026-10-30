@@ -1,0 +1,35 @@
+# Habivah
+
+> Habivah é um sistema para imobiliárias e corretores de imóveis no Brasil. Reúne CRM imobiliário, site para imobiliária com SEO automático, blog que publica sozinho, atendimento 24h no WhatsApp com inteligência artificial e cadastro de imóveis com IA. Não tem mensalidade: a imobiliária paga a instalação uma vez e depois só o que a IA usar, em créditos.
+
+## O que o Habivah faz
+- CRM imobiliário: leads do site, dos portais, do Google, da Meta e do WhatsApp entram no mesmo funil, com distribuição automática para os corretores (roleta), prazo de atendimento e histórico.
+- Site para imobiliária e para corretor de imóveis, com a marca, o domínio e as cores do cliente; vários modelos prontos.
+- SEO automático: título da página, meta-descrição, H1, H2, títulos das imagens, posts do blog e perguntas frequentes escritos a partir do que as pessoas realmente buscam no Google (dados de volume de busca), não de títulos aleatórios. Páginas por imóvel, bairro, cidade e condomínio, mapa do site atualizado e aviso imediato aos buscadores.
+- Blog imobiliário automático com palavras-chave de busca real e imóveis do estoque.
+- Atendimento 24h no WhatsApp com IA: responde em segundos, qualifica o cliente, envia imóveis e repassa ao corretor só quem está pronto.
+- Cadastro de imóveis com IA: a partir das fotos e anotações, gera título, descrição e características.
+- Personalização com IA: o cliente pede em português ("deixe o site azul e troque o título") e a IA ajusta o site e o sistema, com prévia e opção de desfazer.
+- Follow-up automático, e-mail semanal de novidades e assistente de IA no painel.
+
+## Como funciona a cobrança
+- Sem mensalidade.
+- Instalação única (inclui o 1º ano de hospedagem e manutenção).
+- Uso da IA em créditos (ex.: atendimento de um lead no WhatsApp = 1 crédito; post de blog = 3 créditos).
+- Valores sob consulta, conforme o tamanho da imobiliária.
+
+## Para quem é
+Imobiliárias de qualquer tamanho e corretores de imóveis autônomos no Brasil.
+
+## Páginas
+- [Página inicial](https://habivah.com/): visão geral, recursos, SEO, planos e perguntas frequentes
+- [Sobre](https://habivah.com/sobre)
+- [Central de ajuda](https://habivah.com/ajuda): créditos, blog automático, personalizar com IA, hospedagem e dados
+- [Blog](https://habivah.com/blog): tecnologia, CRM, IA e marketing para imobiliárias
+- [Segurança](https://habivah.com/seguranca) · [Privacidade](https://habivah.com/privacidade) · [Termos](https://habivah.com/termos)
+
+## Contato
+- WhatsApp: +55 11 91519-0774
+- E-mail: contato@habivah.com
+- Instagram: https://www.instagram.com/usehabivah/
+- Facebook: https://www.facebook.com/profile.php?id=61595904366825
