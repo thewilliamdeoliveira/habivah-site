@@ -11,8 +11,9 @@ const HEAD_SITE = `<header class="topo">
 </header>`;
 const FOOT_SITE = `<footer class="rodape"><div class="wrap rodape-in"><div class="marca"><span>Habivah</span></div><p>© 2026 Habivah. Sistema para imobiliárias. · <a href="/blog">Blog</a> · <a href="/termos">Termos</a> · <a href="/privacidade">Privacidade</a> · <a href="/seguranca">Segurança</a> · <a href="/sobre">Sobre</a> · <a href="/ajuda">Ajuda</a></p></div></footer>`;
 
-function card(p) {
-  return `<article class="card post"><p class="kicker">${esc(p.categoria)}</p><h3><a href="/blog/${esc(p.slug)}">${esc(p.titulo)}</a></h3><p>${esc(p.resumo)}</p><p class="meta">${dataBR(p.publicado_em)} · ${Number(p.min_leitura) || 5} min de leitura</p></article>`;
+export function card(p) {
+  const img = p.capa_url ? `<a href="/blog/${esc(p.slug)}"><img src="${esc(p.capa_url)}" alt="${esc(p.capa_alt || p.titulo)}" loading="lazy" width="640" height="360" style="width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:10px;margin-bottom:12px"></a>` : "";
+  return `<article class="card post">${img}<p class="kicker">${esc(p.categoria)}</p><h3><a href="/blog/${esc(p.slug)}">${esc(p.titulo)}</a></h3><p>${esc(p.resumo)}</p><p class="meta">${dataBR(p.publicado_em)} · ${Number(p.min_leitura) || 5} min de leitura</p></article>`;
 }
 
 function pagina(p) {
@@ -60,10 +61,10 @@ export async function onRequest({ request, next }) {
 
   const res = await next();
   if (path === "/blog" && res.status === 200) {
-    const lista = await posts("select=slug,titulo,resumo,categoria,publicado_em,min_leitura&order=publicado_em.desc&limit=100");
+    const lista = await posts("select=slug,titulo,resumo,categoria,publicado_em,min_leitura,capa_url,capa_alt&order=publicado_em.desc&limit=100");
     if (!lista.length) return res;
     const html = lista.map(card).join("");
-    return new HTMLRewriter().on("div.grade.posts", { element(e) { e.prepend(html, { html: true }); } }).transform(res);
+    return new HTMLRewriter().on(".vazio-blog", { element(e) { e.remove(); } }).on("div.grade.posts", { element(e) { e.prepend(html, { html: true }); } }).transform(res);
   }
   return res;
 }

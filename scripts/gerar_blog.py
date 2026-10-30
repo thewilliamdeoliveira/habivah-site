@@ -185,6 +185,7 @@ ARTIGOS = [
 <p>Cada imobiliária fica em um espaço próprio, com separação aplicada no banco de dados, nos arquivos e nas automações, e testes automáticos conferem essa separação a cada alteração do sistema. Os detalhes estão na página <a href="/seguranca">Segurança e privacidade</a>. Quer ver funcionando? <a href="https://wa.me/5511915190774?text=Ol%C3%A1!%20Quero%20conhecer%20o%20Habivah." target="_blank" rel="noopener">Chame no WhatsApp</a>.</p>
 """),
 ]
+ARTIGOS = []  # 30/10/2026: artigos antigos excluídos a pedido do William; o blog agora vem do banco (habivah_blog_posts).
 
 def esc(s): return html.escape(s, quote=True)
 def dpt(d):
