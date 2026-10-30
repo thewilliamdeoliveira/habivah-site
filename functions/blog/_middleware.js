@@ -46,21 +46,22 @@ ${limpa(p.corpo_html)}${faqHtml}
 
 export async function onRequest({ request, next }) {
   const path = new URL(request.url).pathname.replace(/\/+$/, "") || "/";
-  const res = await next();
-  if (request.method !== "GET") return res;
+  if (request.method !== "GET") return next();
 
-  if (path === "/blog") {
+  // Artigo criado no painel: o banco responde primeiro (o Pages devolve a home com 200 para caminhos desconhecidos).
+  if (/^\/blog\/[a-z0-9-]+$/.test(path)) {
+    const slug = path.split("/")[2];
+    const [p] = await posts(`slug=eq.${encodeURIComponent(slug)}&select=*&limit=1`);
+    if (p) return new Response(pagina(p), { status: 200, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=300" } });
+    return next();
+  }
+
+  const res = await next();
+  if (path === "/blog" && res.status === 200) {
     const lista = await posts("select=slug,titulo,resumo,categoria,publicado_em,min_leitura&order=publicado_em.desc&limit=100");
     if (!lista.length) return res;
     const html = lista.map(card).join("");
     return new HTMLRewriter().on("div.grade.posts", { element(e) { e.prepend(html, { html: true }); } }).transform(res);
-  }
-
-  if (res.status === 404 && /^\/blog\/[a-z0-9-]+$/.test(path)) {
-    const slug = path.split("/")[2];
-    const [p] = await posts(`slug=eq.${encodeURIComponent(slug)}&select=*&limit=1`);
-    if (!p) return res;
-    return new Response(pagina(p), { status: 200, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=300" } });
   }
   return res;
 }
