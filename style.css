@@ -194,3 +194,15 @@ details p{color:var(--cinza);margin-top:10px}
 .pagina a.btn{text-decoration:none}
 .preco.preco-txt{font-size:32px;line-height:1.15}
 .preco.preco-txt span{display:block;margin:6px 0 0}
+
+.seo-porque{display:grid;grid-template-columns:1fr 1.25fr;gap:40px;background:#fff;border:1px solid var(--linha);border-radius:var(--raio-g);padding:44px;margin-bottom:24px}
+.seo-intro h3{font-size:26px;margin-bottom:14px}
+.seo-intro p{color:var(--cinza);font-size:16px}
+.seo-intro p b{color:var(--navy)}
+.seo-ex{margin-top:22px;background:var(--navy);color:#fff!important;border-radius:14px;padding:16px 18px;font-weight:600;font-size:15px!important}
+.seo-ex span{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--verde);font-weight:700;margin-bottom:6px}
+.seo-lista{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:18px 28px;padding:0;margin:0}
+.seo-lista li{border-top:2px solid var(--verde);padding-top:12px}
+.seo-lista b{display:block;color:var(--navy);font-size:15px;margin-bottom:4px}
+.seo-lista span{color:var(--cinza);font-size:14px;line-height:1.5}
+@media (max-width:960px){.seo-porque{grid-template-columns:1fr;padding:28px 22px;gap:28px}.seo-lista{grid-template-columns:1fr}}
