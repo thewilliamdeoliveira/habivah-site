@@ -1,0 +1,67 @@
+# Habivah — versão completa para assistentes de IA
+
+> Habivah é um sistema completo para imobiliárias brasileiras: CRM com funil de leads, site com a marca da imobiliária, blog que publica um artigo por dia, atendente de WhatsApp com IA e cadastro inteligente de imóveis com IA. Foi criado por um corretor e testado na própria imobiliária.
+
+Site: https://habivah.com · WhatsApp comercial: +55 11 91519-0774 · Demonstração de 20 minutos, sem compromisso.
+
+## O que o Habivah faz
+
+- **Atendente de WhatsApp com IA (24 h):** responde o lead na hora, entende o que ele procura, envia imóveis do estoque da imobiliária com link e só repassa ao corretor quando o lead está qualificado. Cobra o corretor se ninguém atender. Não substitui o corretor: entrega o lead pronto e a venda continua sendo do corretor.
+- **Cadastro inteligente de imóveis:** o corretor sobe as fotos e os dados básicos; a IA trata as fotos, lê os detalhes de cada ambiente, escreve título, meta-descrição e descrição e deixa o anúncio pronto para publicar. Cadastro pelo app de celular em breve.
+- **CRM com funil e roleta:** leads de site, portais, Google e Meta caem no mesmo funil, com origem e campanha preservadas. Distribuição automática por regra, prazo de atendimento e histórico completo.
+- **Site com a marca da imobiliária:** domínio, logo e cores do cliente. Páginas de imóveis e condomínios otimizadas para o Google, com prévia ao compartilhar o link no WhatsApp. Há 10 modelos de site de demonstração (demo1 a demo10 em habivah.com).
+- **Blog que escreve sozinho:** um artigo novo por dia, com palavras-chave de volume real na região da imobiliária, imagem, imóveis do estoque e chamada para o WhatsApp.
+- **Dados isolados:** cada imobiliária tem seus dados separados das demais; dados de proprietário e comissão ficam visíveis só para o administrador; papéis de admin, gerente e corretor.
+
+## SEO e buscas com IA
+
+- Cada imóvel é escrito em torno da busca real do cliente (por exemplo, "casa à venda no Tamboré 1"), com título, meta-descrição e texto únicos.
+- Páginas automáticas para cada bairro, cidade e condomínio, com links internos entre elas.
+- Mapa do site sempre atualizado e aviso imediato aos buscadores quando um imóvel entra ou sai.
+- Site preparado para ser lido e citado por assistentes de inteligência artificial.
+
+## Como funciona a implantação
+
+1. A imobiliária envia o básico: logo, cores, domínio e a lista de imóveis, corretores e clientes (planilha ou exportação de outro sistema).
+2. A equipe do Habivah importa e configura site, CRM, WhatsApp e blog com a marca do cliente; os corretores recebem acesso.
+3. O sistema começa a trabalhar: leads atendidos em segundos, blog publicando todo dia, acompanhamento pelo painel no computador ou no celular.
+
+## Planos e preços
+
+- **Essencial — R$ 5.000 de implantação.** Site com a marca pronto para o Google; CRM com funil e entrada automática de leads; importação de imóveis, clientes e corretores; blog automático; cadastro inteligente de imóveis com IA; 1º ano de hospedagem e manutenção incluso.
+- **Completo — R$ 10.000 de implantação.** Tudo do Essencial, mais domínio, logo, cores e e-mails com o nome do cliente; atendente de WhatsApp com IA 24 h; qualificação automática e repasse ao corretor certo; follow-up automático e e-mail semanal de novidades; treinamento da equipe; 1º ano de hospedagem e manutenção incluso.
+- **Créditos de uso — R$ 1 por crédito.** Atendimento de um lead pela IA no WhatsApp: 1 crédito. Follow-up automático: 1 crédito. Cadastro inteligente de imóvel: 1 crédito. Post de blog completo, com capa: 3 créditos. E-mail semanal de novidades: 1 crédito a cada 10 e-mails. Créditos não vencem enquanto a conta estiver ativa.
+- Hospedagem e manutenção a partir do 2º ano: R$ 600 por ano (condição de lançamento). Alterações e funções novas sob medida são orçadas à parte.
+- **White-label:** licença para revender o sistema com o nome do cliente, com implantação completa (sob consulta).
+
+## Perguntas frequentes
+
+**Preciso entender de tecnologia?** Não. A equipe faz a implantação, importa os dados e configura tudo. A imobiliária e os corretores só usam.
+
+**Posso usar o meu domínio e a minha marca?** Sim. O site, os e-mails e o blog saem com o nome, logo e cores do cliente, no domínio do cliente.
+
+**A atendente de IA substitui o corretor?** Não. Ela responde na hora, organiza o que o cliente quer e entrega o lead pronto para o corretor. A venda continua sendo do corretor.
+
+**Consigo trazer meus imóveis e clientes de outro sistema?** Sim. Imóveis, leads e corretores são importados a partir de planilha ou exportação do sistema atual.
+
+**Meus dados ficam separados das outras imobiliárias?** Sim. Cada imobiliária tem seus dados isolados, e informações sensíveis como proprietário e comissão ficam visíveis só para o administrador.
+
+**Tem mensalidade?** Não. Paga-se a implantação uma vez, com o 1º ano de hospedagem e manutenção incluso. A partir do 2º ano, a hospedagem custa R$ 600 por ano. O resto é por uso, em créditos.
+
+**Como funcionam os créditos?** Cada crédito custa R$ 1 e é consumido só quando a IA trabalha. Os pacotes são comprados quando o cliente quiser e não vencem enquanto a conta estiver ativa. Se o saldo acabar, as automações pausam e o CRM e o site continuam funcionando.
+
+**Consigo controlar quanto vou gastar?** Sim. No painel é possível ligar e desligar cada automação, limitar quantos follow-ups cada lead recebe, escolher quem recebe o e-mail semanal e receber aviso quando o saldo estiver acabando.
+
+**E se eu quiser uma função nova ou uma alteração?** A equipe orça e desenvolve. Pedidos pequenos podem ser pagos com créditos; projetos maiores têm orçamento fechado.
+
+**O site já vem otimizado para o Google?** Sim. Cada imóvel, bairro, condomínio e post é publicado com título, meta-descrição e texto pensados no que as pessoas buscam, e os buscadores são avisados quando algo novo entra no ar.
+
+## Páginas
+
+- https://habivah.com/
+- https://habivah.com/sobre
+- https://habivah.com/ajuda
+- https://habivah.com/seguranca
+- https://habivah.com/termos
+- https://habivah.com/privacidade
+- https://habivah.com/blog
