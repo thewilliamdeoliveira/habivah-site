@@ -192,3 +192,5 @@ details p{color:var(--cinza);margin-top:10px}
 
 .nota-planos{margin-top:24px;font-size:14px;color:var(--cinza);max-width:780px}
 .pagina a.btn{text-decoration:none}
+.preco.preco-txt{font-size:32px;line-height:1.15}
+.preco.preco-txt span{display:block;margin:6px 0 0}
