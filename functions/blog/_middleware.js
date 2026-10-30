@@ -25,13 +25,14 @@ function pagina(p) {
     inLanguage: "pt-BR", mainEntityOfPage: url,
     author: { "@type": "Organization", name: "Habivah" },
     publisher: { "@type": "Organization", name: "Habivah", logo: { "@type": "ImageObject", url: "https://habivah.com/og.png" } },
+    ...(p.capa_url ? { image: p.capa_url } : {}),
   }];
   if (faq.length) ld.push({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
   const ldJson = JSON.stringify(ld).replace(/</g, "\\u003c");
   const faqHtml = faq.length ? `<h2>Perguntas frequentes</h2>${faq.map((f) => `<h3>${esc(f.q)}</h3><p>${esc(f.a)}</p>`).join("")}` : "";
   return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(p.titulo)} — Habivah</title><meta name="description" content="${esc(desc)}"><link rel="canonical" href="${url}">
-<meta property="og:title" content="${esc(p.titulo)} — Habivah"><meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${url}"><meta property="og:image" content="https://habivah.com/og.png">
+<meta property="og:title" content="${esc(p.titulo)} — Habivah"><meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${url}"><meta property="og:image" content="${esc(p.capa_url || "https://habivah.com/og.png")}">
 <meta name="theme-color" content="#0B1F3A"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
@@ -39,6 +40,7 @@ function pagina(p) {
 <script type="application/ld+json">${ldJson}</script></head><body>${HEAD_SITE}
 <main class="pagina"><div class="wrap estreito"><p class="crumb"><a href="/">Início</a> › <a href="/blog">Blog</a></p>
 <p class="kicker">${esc(p.categoria)}</p><h1>${esc(p.titulo)}</h1><p class="data">${dataBR(p.publicado_em)} · ${Number(p.min_leitura) || 5} min de leitura</p>
+${p.capa_url ? `<img src="${esc(p.capa_url)}" alt="${esc(p.capa_alt || p.titulo)}" width="1280" height="720" style="width:100%;height:auto;border-radius:14px;margin:8px 0 24px">` : ""}
 ${limpa(p.corpo_html)}${faqHtml}
 <aside class="cta-post"><h2>Quer ver o Habivah funcionando na sua imobiliária?</h2><p>CRM, site, blog e atendente de WhatsApp com a sua marca, implantados por nós.</p><p><a class="btn btn-ouro" href="/#demo">Agendar demonstração</a> <a class="btn btn-linha" href="https://wa.me/5511915190774?text=Ol%C3%A1!%20Quero%20conhecer%20o%20Habivah." target="_blank" rel="noopener">Chamar no WhatsApp</a></p></aside>
 </div></main>${FOOT_SITE}</body></html>`;

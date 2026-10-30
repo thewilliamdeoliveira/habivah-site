@@ -144,7 +144,10 @@ async function blogView(w){
   var j=await chamar("habivah-blog-gerar",{tema:tema,palavra_chave:fk.querySelector("input").value.trim()});
   bt.disabled=false;if(!j.ok){say(mg,j.error||"Falhou.");return;}
   cur=j.post;cur.status="rascunho";cur.id=null;render();};
- [ft,fk,bt,mg].forEach(function(x){g.appendChild(x);});w.appendChild(g);
+ var au=el("button",{class:"btn s",type:"button",text:"Gerar e publicar automático (DataForSEO + capa fal.ai)",style:"margin:10px 0 0 8px"});
+ au.onclick=async function(){if(!confirm("Escolher a palavra mais buscada, escrever, gerar a capa e PUBLICAR agora? Leva 1 a 2 minutos."))return;au.disabled=true;say(mg,"Pesquisando palavras, escrevendo e gerando a capa… (1 a 2 min)",true);mg.style.color="#5B6678";
+  var j=await chamar("habivah-blog-auto",{modo:"publicado"});au.disabled=false;if(!j.ok){say(mg,j.error||"Falhou.");return;}say(mg,"Publicado: "+j.post.titulo,true);setTimeout(render,1200);};
+ [ft,fk,bt,au,mg].forEach(function(x){g.appendChild(x);});w.appendChild(g);
  if(cur)w.appendChild(editor());
  w.appendChild(el("h3",{text:"Artigos ("+posts.length+")",style:"margin:20px 0 8px"}));
  if(!posts.length)w.appendChild(el("div",{class:"vazio",text:"Nenhum artigo criado aqui ainda. Os 7 artigos fixos do site continuam publicados."}));
@@ -157,12 +160,12 @@ async function blogView(w){
   var acts=el("div",{class:"acts"},[ed,pub]);
   if(p.status==="publicado")acts.appendChild(el("a",{class:"btn s",href:"/blog/"+p.slug,target:"_blank",rel:"noopener",text:"Ver no site"}));
   acts.appendChild(rm);
-  w.appendChild(el("div",{class:"lead"},[el("h3",{},[document.createTextNode(p.titulo+" "),el("span",{class:"tag "+(p.status==="publicado"?"cliente":"novo"),text:p.status})]),el("div",{class:"m",text:p.categoria+" · "+fmt(p.created_at)}),acts]));
+  w.appendChild(el("div",{class:"lead"},[el("h3",{},[document.createTextNode(p.titulo+" "),el("span",{class:"tag "+(p.status==="publicado"?"cliente":"novo"),text:p.status})]),el("div",{class:"m",text:p.categoria+" · "+fmt(p.created_at)+(p.origem==="auto"?" · automático":"")+(p.palavra_chave?" · "+p.palavra_chave+(p.volume_busca?" ("+p.volume_busca+"/mês)":""):"")}),p.capa_url?el("img",{src:p.capa_url,alt:"",style:"max-width:220px;border-radius:8px;margin-top:6px"}):null,acts]));
  });
 }
 function editor(){
  var p=cur,f=el("form",{class:"lead"},[el("h3",{text:p.id?"Editar artigo":"Rascunho gerado — revise e salve"})]);
- var fs=[campo("Título","titulo","text",p.titulo),campo("Endereço (slug)","slug","text",p.slug),campo("Categoria","categoria","text",p.categoria),campo("Resumo (aparece na lista)","resumo","textarea",p.resumo),campo("Descrição para o Google (até 155)","meta_description","textarea",p.meta_description),campo("Conteúdo (HTML: h2, h3, p, ul, li)","corpo_html","textarea",p.corpo_html,{rows:"16",style:"font-family:ui-monospace,monospace;font-size:13px"})];
+ var fs=[campo("Título","titulo","text",p.titulo),campo("Endereço (slug)","slug","text",p.slug),campo("Categoria","categoria","text",p.categoria),campo("Imagem de capa (URL)","capa_url","text",p.capa_url),campo("Resumo (aparece na lista)","resumo","textarea",p.resumo),campo("Descrição para o Google (até 155)","meta_description","textarea",p.meta_description),campo("Conteúdo (HTML: h2, h3, p, ul, li)","corpo_html","textarea",p.corpo_html,{rows:"16",style:"font-family:ui-monospace,monospace;font-size:13px"})];
  fs.forEach(function(x){f.appendChild(x);});
  var mg=msgBox();var sv=el("button",{class:"btn",type:"submit",text:"Salvar rascunho"});
  var pb=el("button",{class:"btn s",type:"button",text:"Salvar e publicar"});
@@ -170,12 +173,12 @@ function editor(){
  var cc=el("button",{class:"btn s",type:"button",text:"Fechar"});
  f.appendChild(el("div",{class:"acts"},[sv,pb,pv,cc]));f.appendChild(mg);
  var prev=el("iframe",{sandbox:"",style:"display:none;width:100%;height:420px;border:1px solid #E3E7EE;border-radius:8px;margin-top:10px;background:#fff"});f.appendChild(prev);
- function ler(){["titulo","slug","categoria","resumo","meta_description","corpo_html"].forEach(function(k){p[k]=f.elements[k].value.trim();});p.slug=slugify(p.slug||p.titulo);}
+ function ler(){["titulo","slug","categoria","capa_url","resumo","meta_description","corpo_html"].forEach(function(k){p[k]=f.elements[k].value.trim();});p.slug=slugify(p.slug||p.titulo);}
  pv.onclick=function(){ler();prev.style.display="block";prev.srcdoc='<body style="font-family:Georgia,serif;max-width:680px;margin:20px auto;padding:0 16px;line-height:1.6"><h1>'+p.titulo.replace(/</g,"&lt;")+'</h1>'+p.corpo_html.replace(/<script[\s\S]*?<\/script>/gi,"");};
  cc.onclick=function(){cur=null;render();};
  async function salvar(pub){ler();if(p.titulo.length<5||p.corpo_html.length<50||!p.slug){say(mg,"Preencha título e conteúdo.");return;}
   var words=p.corpo_html.replace(/<[^>]+>/g," ").split(/\s+/).length;
-  var row={slug:p.slug,titulo:p.titulo,resumo:p.resumo,meta_description:p.meta_description,categoria:p.categoria||"Mercado",corpo_html:p.corpo_html,faq:p.faq||[],palavra_chave:p.palavra_chave||null,min_leitura:Math.max(2,Math.round(words/200)),updated_at:new Date().toISOString()};
+  var row={slug:p.slug,titulo:p.titulo,resumo:p.resumo,meta_description:p.meta_description,categoria:p.categoria||"Mercado",corpo_html:p.corpo_html,faq:p.faq||[],palavra_chave:p.palavra_chave||null,capa_url:p.capa_url||null,min_leitura:Math.max(2,Math.round(words/200)),updated_at:new Date().toISOString()};
   if(pub){row.status="publicado";if(!p.publicado_em)row.publicado_em=new Date().toISOString();}
   var x=p.id?await db.from("habivah_blog_posts").update(row).eq("id",p.id).select().single():await db.from("habivah_blog_posts").insert(row).select().single();
   if(x.error){say(mg,/duplicate|unique/i.test(x.error.message)?"Já existe um artigo com esse endereço. Mude o slug.":"Não salvou: "+x.error.message);return;}
