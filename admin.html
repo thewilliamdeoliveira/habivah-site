@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Habivah — Painel de leads</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+:root{--navy:#0B1F3A;--ouro:#C9A45C;--tinta:#14213A;--cinza:#5B6678;--linha:#E3E7EE;--suave:#F6F7FA;--verde:#1a7f37;--verm:#b3261e}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--suave);color:var(--tinta)}
+.top{background:var(--navy);color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}.top b{font-family:Georgia,serif;font-size:20px}.top button{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:999px;padding:6px 14px;cursor:pointer}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+.login{max-width:360px;margin:12vh auto;background:#fff;padding:28px;border-radius:14px;box-shadow:0 10px 40px -15px rgba(11,31,58,.35)}.login h1{margin:0 0 4px;font-family:Georgia,serif;color:var(--navy);font-size:24px}.login p{margin:0 0 16px;color:var(--cinza);font-size:14px}
+label{display:block;font-size:13px;font-weight:600;margin-top:10px}input,select,textarea{width:100%;margin-top:4px;padding:10px 12px;border:1px solid #c9d2de;border-radius:8px;font:inherit;font-size:15px;background:#fff}
+.btn{background:var(--ouro);color:var(--navy);border:0;border-radius:999px;padding:11px 18px;font-weight:700;cursor:pointer;font:inherit;font-weight:700}.btn.s{background:#fff;border:1px solid var(--linha);color:var(--tinta);font-weight:600;padding:7px 12px;font-size:13px;text-decoration:none;display:inline-block}
+.err{color:var(--verm);font-size:13px;min-height:18px;margin-top:8px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}.kpi{background:#fff;border-radius:12px;padding:14px;border:1px solid var(--linha)}.kpi small{color:var(--cinza);font-size:12px;text-transform:uppercase;letter-spacing:.05em}.kpi div{font-family:Georgia,serif;font-size:28px;color:var(--navy)}
+.funil{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.chip{border:1px solid var(--linha);background:#fff;border-radius:999px;padding:6px 14px;font-size:13px;cursor:pointer}.chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 14px}.bar input{flex:1;min-width:200px;margin:0}
+.dist{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-bottom:14px}.dist .kpi{font-size:13px}.dist ul{margin:6px 0 0;padding:0;list-style:none}.dist li{display:flex;justify-content:space-between;padding:2px 0}
+.lead{background:#fff;border:1px solid var(--linha);border-radius:12px;padding:14px 16px;margin-bottom:10px}.lead h3{margin:0;font-size:17px;color:var(--navy)}.lead .m{color:var(--cinza);font-size:13px;margin:2px 0 8px}
+.row{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px}.row span b{color:var(--cinza);font-weight:500;margin-right:4px}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:center}.acts select{width:auto;margin:0;padding:7px 10px}.lead textarea{margin-top:10px;min-height:46px;resize:vertical}
+.tag{display:inline-block;font-size:11px;border-radius:999px;padding:2px 9px;background:var(--suave);border:1px solid var(--linha);color:var(--cinza)}.tag.novo{background:#fff6e0;border-color:var(--ouro);color:#7a5a12}
+.vazio{text-align:center;color:var(--cinza);padding:40px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(function(){
+var db=supabase.createClient("https://rzsotlrmjrkslsltnntg.supabase.co","sb_publishable_smEE1n3Srugt98xxmNZ_4g_q5A_0ddN");
+var app=document.getElementById("app");
+var STATUS=[["novo","Novo"],["contatado","Contatado"],["demo","Demo agendada"],["cliente","Cliente"],["perdido","Perdido"]];
+var leads=[],filtro="todos",busca="";
+function el(t,a,k){var e=document.createElement(t);if(a)for(var x in a){if(x==="text")e.textContent=a[x];else if(x==="class")e.className=a[x];else e.setAttribute(x,a[x]);}(k||[]).forEach(function(c){if(c)e.appendChild(c);});return e;}
+function fmt(d){return new Date(d).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});}
+function canal(l){var u=l.utm||{};if(u.fbclid||/facebook|instagram|meta|fb|ig/i.test(u.utm_source||""))return"Anúncio Meta";if(u.gclid||/google/i.test(u.utm_source||""))return"Google Ads";if(u.utm_source)return u.utm_source;return"Direto / orgânico";}
+function cta(l){var m=(l.pagina||"").match(/\[cta: (.*)\]/);return m?m[1]:"";}
+function digits(t){var d=(t||"").replace(/\D/g,"");return d?(d.indexOf("55")===0&&d.length>=12?d:"55"+d):"";}
+function login(msg){app.textContent="";var f=el("form",{class:"login"},[el("h1",{text:"Habivah"}),el("p",{text:"Painel de leads — acesso restrito."}),
+ el("label",{text:"E-mail"},[el("input",{type:"email",name:"e",required:"",autocomplete:"username"})]),
+ el("label",{text:"Senha"},[el("input",{type:"password",name:"p",required:"",autocomplete:"current-password"})]),
+ el("div",{class:"err",text:msg||""}),el("button",{class:"btn",type:"submit",text:"Entrar",style:"width:100%;margin-top:6px"})]);
+ f.addEventListener("submit",async function(ev){ev.preventDefault();var b=f.querySelector("button");b.disabled=true;
+  var r=await db.auth.signInWithPassword({email:f.e.value.trim(),password:f.p.value});
+  if(r.error){login("E-mail ou senha incorretos.");return;}start();});
+ app.appendChild(f);}
+async function start(){
+ var s=await db.auth.getSession();if(!s.data.session){login();return;}
+ var r=await db.from("saas_interessados").select("*").order("created_at",{ascending:false}).limit(2000);
+ if(r.error){login("Erro ao carregar: "+r.error.message);return;}
+ leads=r.data||[];
+ render();}
+function render(){
+ app.textContent="";
+ var sair=el("button",{text:"Sair"});sair.onclick=async function(){await db.auth.signOut();login();};
+ app.appendChild(el("div",{class:"top"},[el("b",{text:"Habivah · Leads"}),sair]));
+ var w=el("div",{class:"wrap"});app.appendChild(w);
+ var agora=Date.now(),dia=864e5;
+ function n(ms){return leads.filter(function(l){return agora-new Date(l.created_at)<ms;}).length;}
+ var hojeIni=new Date();hojeIni.setHours(0,0,0,0);
+ var k=el("div",{class:"kpis"},[
+  kpi("Hoje",leads.filter(function(l){return new Date(l.created_at)>=hojeIni;}).length),kpi("7 dias",n(7*dia)),kpi("30 dias",n(30*dia)),kpi("Total",leads.length),
+  kpi("Clientes",leads.filter(function(l){return l.status==="cliente";}).length)]);
+ w.appendChild(k);
+ // funil
+ var fu=el("div",{class:"funil"});
+ [["todos","Todos ("+leads.length+")"]].concat(STATUS.map(function(s){return[s[0],s[1]+" ("+leads.filter(function(l){return l.status===s[0];}).length+")"];})).forEach(function(s){
+  var c=el("button",{class:"chip"+(filtro===s[0]?" on":""),text:s[1]});c.onclick=function(){filtro=s[0];render();};fu.appendChild(c);});
+ w.appendChild(fu);
+ // distribuições
+ function dist(titulo,fn){var m={};leads.forEach(function(l){var v=fn(l)||"—";m[v]=(m[v]||0)+1;});
+  var ul=el("ul");Object.keys(m).sort(function(a,b){return m[b]-m[a];}).slice(0,6).forEach(function(v){ul.appendChild(el("li",{},[el("span",{text:v}),el("b",{text:String(m[v])})]));});
+  return el("div",{class:"kpi"},[el("small",{text:titulo}),ul]);}
+ w.appendChild(el("div",{class:"dist"},[dist("Tamanho (corretores)",function(l){return l.corretores;}),dist("Canal",canal),dist("Botão / plano",function(l){return cta(l)||l.plano;})]));
+ // busca
+ var bar=el("div",{class:"bar"});var q=el("input",{type:"search",placeholder:"Buscar nome, imobiliária, telefone, e-mail…"});q.value=busca;
+ q.oninput=function(){busca=q.value;lista();};
+ var csv=el("button",{class:"btn s",text:"Exportar CSV"});csv.onclick=exportar;bar.appendChild(q);bar.appendChild(csv);w.appendChild(bar);
+ var box=el("div",{id:"lista"});w.appendChild(box);lista();
+ function kpi(t,v){return el("div",{class:"kpi"},[el("small",{text:t}),el("div",{text:String(v)})]);}
+}
+function lista(){
+ var box=document.getElementById("lista");box.textContent="";var b=busca.toLowerCase();
+ var vis=leads.filter(function(l){return(filtro==="todos"||l.status===filtro)&&(!b||[l.nome,l.imobiliaria,l.telefone,l.email].join(" ").toLowerCase().indexOf(b)>-1);});
+ if(!vis.length){box.appendChild(el("div",{class:"vazio",text:"Nenhum lead por aqui ainda."}));return;}
+ vis.forEach(function(l){box.appendChild(card(l));});
+}
+function card(l){
+ var d=digits(l.telefone);
+ var sel=el("select");STATUS.forEach(function(s){var o=el("option",{value:s[0],text:s[1]});if(l.status===s[0])o.selected=true;sel.appendChild(o);});
+ sel.onchange=async function(){var r=await db.from("saas_interessados").update({status:sel.value,updated_at:new Date().toISOString()}).eq("id",l.id);if(r.error){alert("Não salvou: "+r.error.message);sel.value=l.status;}else{l.status=sel.value;render();}};
+ var nota=el("textarea",{placeholder:"Anotações (salva ao sair do campo)"});nota.value=l.notas||"";
+ nota.onblur=async function(){if((l.notas||"")===nota.value)return;var r=await db.from("saas_interessados").update({notas:nota.value,updated_at:new Date().toISOString()}).eq("id",l.id);if(!r.error)l.notas=nota.value;};
+ var acts=el("div",{class:"acts"},[sel]);
+ if(d)acts.appendChild(el("a",{class:"btn s",href:"https://wa.me/"+d,target:"_blank",rel:"noopener",text:"WhatsApp"}));
+ if(l.email)acts.appendChild(el("a",{class:"btn s",href:"mailto:"+l.email,text:"E-mail"}));
+ var info=[["Telefone",l.telefone],["E-mail",l.email],["Corretores",l.corretores],["Plano",l.plano],["Botão",cta(l)],["Canal",canal(l)]].filter(function(x){return x[1];}).map(function(x){return el("span",{},[el("b",{text:x[0]}),document.createTextNode(x[1])]);});
+ var u=l.utm||{};var camp=u.utm_campaign?el("div",{class:"m",text:"Campanha: "+u.utm_campaign+(u.utm_content?" · "+u.utm_content:"")}):null;
+ return el("div",{class:"lead"},[el("h3",{},[document.createTextNode(l.nome+" "),el("span",{class:"tag "+l.status,text:(STATUS.filter(function(s){return s[0]===l.status;})[0]||[0,l.status])[1]})]),
+  el("div",{class:"m",text:(l.imobiliaria?l.imobiliaria+" · ":"")+fmt(l.created_at)}),el("div",{class:"row"},info),
+  l.mensagem?el("div",{class:"m",text:l.mensagem,style:"margin-top:8px"}):null,camp,acts,nota]);
+}
+function exportar(){
+ var cols=["created_at","nome","imobiliaria","telefone","email","corretores","plano","status","pagina","notas"];
+ var linhas=[cols.join(",")].concat(leads.map(function(l){return cols.map(function(c){return '"'+String(l[c]==null?"":l[c]).replace(/"/g,'""')+'"';}).join(",");}));
+ var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["﻿"+linhas.join("\n")],{type:"text/csv"}));a.download="leads-habivah.csv";a.click();}
+start();
+})();
+</script>
+</body>
+</html>
