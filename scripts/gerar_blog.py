@@ -192,7 +192,7 @@ def dpt(d):
     m = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"]
     y, mo, da = d.split("-"); return f"{int(da)} de {m[int(mo)-1]} de {y}"
 
-LOGO = '<svg viewBox="0 0 32 32" width="%d" height="%d" aria-hidden="true"><path d="M4 15 16 5l12 10v12a1 1 0 0 1-1 1h-7v-8h-8v8H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="16" cy="14" r="2.2" fill="#C9A45C"/></svg>'
+LOGO = '<img src="/assets/brand/logo-neg.svg" alt="habivah" width="%d" height="%d">'
 def head(title, desc, canon, extra=""):
     return f'''<!doctype html>
 <html lang="pt-BR">
@@ -207,10 +207,10 @@ def head(title, desc, canon, extra=""):
 <meta property="og:url" content="{canon}">
 <meta property="og:image" content="https://habivah.com/og.png">
 <meta name="theme-color" content="#0B1F3A">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <script src="/pixel.js" defer></script>
 <script src="/lead.js" defer></script>
@@ -218,7 +218,7 @@ def head(title, desc, canon, extra=""):
 <body>
 <header class="topo">
   <div class="wrap topo-in">
-    <a href="/" class="marca" aria-label="Habivah — início">{LOGO % (28,28)}<span>Habivah</span></a>
+    <a href="/" class="marca" aria-label="Habivah — início">{LOGO % (119,26)}</a>
     <nav class="menu" aria-label="Principal">
       <a href="/#recursos">Recursos</a>
       <a href="/#como">Como funciona</a>
@@ -226,13 +226,13 @@ def head(title, desc, canon, extra=""):
       <a href="/blog">Blog</a>
       <a href="/sobre">Sobre</a>
     </nav>
-    <a class="btn btn-ouro btn-sm" href="/#demo">Agendar demonstração</a>
+    <a class="btn btn-pri btn-sm" href="/#demo">Agendar demonstração</a>
   </div>
 </header>
 '''
 FOOT = f'''<footer class="rodape">
   <div class="wrap rodape-in">
-    <div class="marca">{LOGO % (22,22)}<span>Habivah</span></div>
+    <div class="marca">{LOGO % (101,22)}</div>
     <p>© 2026 Habivah. Sistema para imobiliárias. · <a href="/blog">Blog</a> · <a href="/termos">Termos</a> · <a href="/privacidade">Privacidade</a> · <a href="/seguranca">Segurança</a> · <a href="/sobre">Sobre</a> · <a href="/ajuda">Ajuda</a></p>
   </div>
 </footer>
@@ -265,7 +265,7 @@ def gerar():
 <h1>{esc(a["titulo"])}</h1>
 <p class="data">{dpt(a["data"])} · {a["min"]} min de leitura</p>
 {a["corpo"].strip()}
-<aside class="cta-post"><h2>Quer ver o Habivah funcionando na sua imobiliária?</h2><p>CRM, site, blog e atendente de WhatsApp com a sua marca, implantados por nós.</p><p><a class="btn btn-ouro" href="/#demo">Agendar demonstração</a> <a class="btn btn-linha" href="{WA}" target="_blank" rel="noopener">Chamar no WhatsApp</a></p></aside>
+<aside class="cta-post"><h2>Quer ver o Habivah funcionando na sua imobiliária?</h2><p>CRM, site, blog e atendente de WhatsApp com a sua marca, implantados por nós.</p><p><a class="btn btn-pri" href="/#demo">Agendar demonstração</a> <a class="btn btn-linha" href="{WA}" target="_blank" rel="noopener">Chamar no WhatsApp</a></p></aside>
 </div>
 <div class="wrap"><h2 class="mais">Continue lendo</h2><div class="grade posts dois">{cards(outros)}</div></div></main>
 ''' + FOOT

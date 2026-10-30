@@ -1,0 +1,11 @@
+{
+  "name": "Habivah",
+  "short_name": "habivah",
+  "icons": [
+    { "src": "/assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/brand/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#0B1F3A",
+  "background_color": "#F5F8FB",
+  "display": "standalone"
+}
