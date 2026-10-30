@@ -43,7 +43,14 @@ function digits(t){var d=(t||"").replace(/\D/g,"");return d?(d.indexOf("55")===0
 function login(msg){app.textContent="";var f=el("form",{class:"login"},[el("h1",{text:"Habivah"}),el("p",{text:"Painel de leads — acesso restrito."}),
  el("label",{text:"E-mail"},[el("input",{type:"email",name:"e",required:"",autocomplete:"username"})]),
  el("label",{text:"Senha"},[el("input",{type:"password",name:"p",required:"",autocomplete:"current-password"})]),
- el("div",{class:"err",text:msg||""}),el("button",{class:"btn",type:"submit",text:"Entrar",style:"width:100%;margin-top:6px"})]);
+ el("div",{class:"err",text:msg||""}),el("button",{class:"btn",type:"submit",text:"Entrar",style:"width:100%;margin-top:6px"}),
+ el("button",{type:"button",id:"esq",text:"Esqueci minha senha / criar senha",style:"background:none;border:0;color:#5B6678;text-decoration:underline;cursor:pointer;margin-top:12px;font:inherit;font-size:13px;width:100%"})]);
+ f.querySelector("#esq").onclick=async function(){var em=f.e.value.trim();var er=f.querySelector(".err");
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){er.style.color="#b3261e";er.textContent="Digite seu e-mail no campo acima e clique de novo.";return;}
+  er.style.color="#5B6678";er.textContent="Enviando…";
+  var r=await db.auth.resetPasswordForEmail(em,{redirectTo:"https://habivah.com/admin"});
+  if(r.error){er.style.color="#b3261e";er.textContent="Não foi possível enviar: "+r.error.message;return;}
+  er.style.color="#1a7f37";er.textContent="Pronto! Se esse e-mail tiver acesso, você vai receber um link para definir a senha.";};
  f.addEventListener("submit",async function(ev){ev.preventDefault();var b=f.querySelector("button");b.disabled=true;
   var r=await db.auth.signInWithPassword({email:f.e.value.trim(),password:f.p.value});
   if(r.error){login("E-mail ou senha incorretos.");return;}start();});
@@ -108,7 +115,17 @@ function exportar(){
  var cols=["created_at","nome","imobiliaria","telefone","email","corretores","plano","status","pagina","notas"];
  var linhas=[cols.join(",")].concat(leads.map(function(l){return cols.map(function(c){return '"'+String(l[c]==null?"":l[c]).replace(/"/g,'""')+'"';}).join(",");}));
  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["﻿"+linhas.join("\n")],{type:"text/csv"}));a.download="leads-habivah.csv";a.click();}
-start();
+function novaSenha(){app.textContent="";var f=el("form",{class:"login"},[el("h1",{text:"Definir senha"}),el("p",{text:"Escolha a senha do painel (mínimo 8 caracteres)."}),
+ el("label",{text:"Nova senha"},[el("input",{type:"password",name:"p",required:"",minlength:"8",autocomplete:"new-password"})]),
+ el("div",{class:"err",text:""}),el("button",{class:"btn",type:"submit",text:"Salvar senha",style:"width:100%;margin-top:6px"})]);
+ f.addEventListener("submit",async function(ev){ev.preventDefault();var er=f.querySelector(".err");
+  if(f.p.value.length<8){er.textContent="Use pelo menos 8 caracteres.";return;}
+  var r=await db.auth.updateUser({password:f.p.value});
+  if(r.error){er.textContent="Não foi possível salvar: "+r.error.message;return;}
+  history.replaceState(null,"","/admin");start();});app.appendChild(f);}
+var recuperando=/type=recovery/.test(location.hash);
+db.auth.onAuthStateChange(function(ev){if(ev==="PASSWORD_RECOVERY"){recuperando=true;novaSenha();}});
+if(!recuperando)start();
 })();
 </script>
 </body>
