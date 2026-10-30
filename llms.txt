@@ -1,0 +1,35 @@
+# Habivah
+
+> Habivah é um sistema completo para imobiliárias brasileiras: CRM com funil de leads, site com a marca da imobiliária, blog que publica um artigo por dia, atendente de WhatsApp com IA e cadastro inteligente de imóveis com IA. Foi criado por um corretor e testado na própria imobiliária. A imobiliária usa o seu domínio, logo e cores, sem precisar de equipe técnica.
+
+Site: https://habivah.com · WhatsApp comercial: +55 11 91519-0774 · Idioma: português do Brasil.
+
+## Modelo de preço (resumo)
+
+- Sem mensalidade. Plano Essencial: R$ 5.000 de implantação. Plano Completo: R$ 10.000 de implantação. O 1º ano de hospedagem e manutenção está incluso; a partir do 2º ano, R$ 600 por ano (condição de lançamento).
+- A inteligência artificial é paga por uso, em créditos de R$ 1 cada: 1 crédito por atendimento de lead no WhatsApp, por follow-up e por cadastro inteligente de imóvel; 3 créditos por post de blog com capa. Os créditos não vencem enquanto a conta estiver ativa.
+- Licença white-label (revenda com o nome do cliente) sob consulta.
+
+## Produto
+
+- [Página inicial](https://habivah.com/): Recursos, exemplos de sites, como funciona, planos e perguntas frequentes.
+- [Sobre o Habivah](https://habivah.com/sobre): Quem faz o Habivah e por quê.
+- [Guia do cliente](https://habivah.com/ajuda): Primeiros passos, créditos, automações, WhatsApp com IA, blog, hospedagem e suporte.
+- [Segurança](https://habivah.com/seguranca): Isolamento entre imobiliárias, permissões por papel, LGPD, backups e verificações automáticas.
+- [Termos de uso](https://habivah.com/termos)
+- [Política de privacidade](https://habivah.com/privacidade): Tratamento de dados pessoais conforme a LGPD.
+
+## Blog (guias para imobiliárias)
+
+- [CRM imobiliário: o que é e como escolher o certo para a sua imobiliária](https://habivah.com/blog/crm-imobiliario-como-escolher): O que um CRM imobiliário precisa fazer de verdade, os erros mais comuns na escolha e um checklist simples para decidir.
+- [Site para imobiliária: 8 itens que não podem faltar](https://habivah.com/blog/site-para-imobiliaria-o-que-ter): O que o visitante procura, o que o Google valoriza e o que faz o lead virar contato no site de uma imobiliária.
+- [Blog imobiliário: como ele atrai clientes para a sua imobiliária](https://habivah.com/blog/blog-imobiliario-atrai-clientes): Por que um blog traz visitantes qualificados, que temas funcionam no mercado imobiliário e como manter a frequência sem sobrecarregar a equipe.
+- [Atendimento no WhatsApp com IA: como responder leads na hora sem perder o toque humano](https://habivah.com/blog/atendimento-whatsapp-ia-imobiliaria): O papel de um atendente virtual na imobiliária, o que ele deve fazer sozinho e quando passar a conversa para um corretor.
+- [Sistema imobiliário com a sua marca: o que é white-label e para quem faz sentido](https://habivah.com/blog/sistema-imobiliario-com-sua-marca-white-label): Como funciona um sistema white-label para imobiliárias, o que pode ser personalizado e quando vale mais a pena do que um sistema padrão.
+- [Quanto custa um sistema para imobiliária em 2026 (e o que muda sem mensalidade)](https://habivah.com/blog/quanto-custa-sistema-para-imobiliaria): Os modelos de cobrança que existem no mercado, o que costuma vir escondido no preço e como comparar propostas de verdade.
+- [Segurança de dados no sistema da imobiliária: 7 perguntas antes de contratar](https://habivah.com/blog/seguranca-dados-sistema-imobiliario): Leads, proprietários e comissões são o patrimônio da imobiliária. O que perguntar ao fornecedor para não descobrir um problema tarde demais.
+
+## Referências técnicas
+
+- [Versão completa deste resumo](https://habivah.com/llms-full.txt): Recursos, planos, créditos e perguntas frequentes em um único arquivo.
+- [Sitemap](https://habivah.com/sitemap.xml)

@@ -1,4 +1,38 @@
+# habivah.com — robots.txt
+#
+# Um bot que tem grupo próprio ignora o grupo "User-agent: *". Por isso buscadores
+# e bots de IA ficam no MESMO grupo, com a mesma área privada bloqueada.
+
+# Buscadores
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: Applebot
+User-agent: DuckDuckBot
+# IA — busca e resposta em tempo real (citam o site com link)
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: DuckAssistBot
+User-agent: YouBot
+# IA — treinamento dos modelos e dados de conhecimento
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: Claude-Web
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Amazonbot
+User-agent: CCBot
+User-agent: cohere-ai
+User-agent: Meta-ExternalAgent
+Allow: /
+Disallow: /proposta
+
 User-agent: *
 Allow: /
 Disallow: /proposta
+
 Sitemap: https://habivah.com/sitemap.xml

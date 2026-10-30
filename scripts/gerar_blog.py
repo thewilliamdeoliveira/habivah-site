@@ -271,6 +271,15 @@ def gerar():
     urls = ["", "sobre", "ajuda", "termos", "privacidade", "seguranca", "blog"] + ["blog/" + a["slug"] for a in ARTIGOS]
     x = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "".join(f'<url><loc>https://habivah.com/{u}</loc></url>' for u in urls) + '</urlset>\n'
     open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8").write(x)
+    # llms.txt: mantém a lista do blog em dia (assistentes de IA leem este arquivo)
+    lp = os.path.join(ROOT, "llms.txt")
+    if os.path.exists(lp):
+        t = open(lp, encoding="utf-8").read()
+        ini, fim = t.find("## Blog (guias para imobiliárias)"), t.find("## Referências técnicas")
+        if ini != -1 and fim > ini:
+            linhas = "".join(f'- [{a["titulo"]}](https://habivah.com/blog/{a["slug"]}): {a["resumo"]}\n' for a in ARTIGOS)
+            t = t[:ini] + "## Blog (guias para imobiliárias)\n\n" + linhas + "\n" + t[fim:]
+            open(lp, "w", encoding="utf-8").write(t)
 
 gerar()
 print("ok:", len(ARTIGOS), "artigos")
