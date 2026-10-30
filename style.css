@@ -206,3 +206,10 @@ details p{color:var(--cinza);margin-top:10px}
 .seo-lista b{display:block;color:var(--navy);font-size:15px;margin-bottom:4px}
 .seo-lista span{color:var(--cinza);font-size:14px;line-height:1.5}
 @media (max-width:960px){.seo-porque{grid-template-columns:1fr;padding:28px 22px;gap:28px}.seo-lista{grid-template-columns:1fr}}
+
+.rodape .redes{display:flex;gap:10px}
+.rodape .redes a{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.14);display:grid;place-items:center;color:var(--cinza-escuro);transition:background .2s,color .2s,border-color .2s}
+.rodape .redes a:hover{background:var(--verde);border-color:var(--verde);color:var(--navy)}
+.rodape .redes svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.rodape .redes svg .pt{fill:currentColor;stroke:none}
+.rodape .redes svg.cheio{fill:currentColor;stroke:none}
