@@ -14,7 +14,7 @@
 .login{max-width:360px;margin:12vh auto;background:#fff;padding:28px;border-radius:14px;box-shadow:0 10px 40px -15px rgba(11,31,58,.35)}.login h1{margin:0 0 4px;font-family:Georgia,serif;color:var(--navy);font-size:24px}.login p{margin:0 0 16px;color:var(--cinza);font-size:14px}
 label{display:block;font-size:13px;font-weight:600;margin-top:10px}input,select,textarea{width:100%;margin-top:4px;padding:10px 12px;border:1px solid #c9d2de;border-radius:8px;font:inherit;font-size:15px;background:#fff}
 .btn{background:var(--ouro);color:var(--navy);border:0;border-radius:999px;padding:11px 18px;font-weight:700;cursor:pointer;font:inherit;font-weight:700}.btn.s{background:#fff;border:1px solid var(--linha);color:var(--tinta);font-weight:600;padding:7px 12px;font-size:13px;text-decoration:none;display:inline-block}
-.err{color:var(--verm);font-size:13px;min-height:18px;margin-top:8px}
+.pw{position:relative}.pw input{padding-right:46px}.pw button{position:absolute;right:6px;top:50%;transform:translateY(-50%);margin-top:2px;background:none;border:0;cursor:pointer;font-size:18px;padding:6px 8px;line-height:1}.err{color:var(--verm);font-size:13px;min-height:18px;margin-top:8px}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}.kpi{background:#fff;border-radius:12px;padding:14px;border:1px solid var(--linha)}.kpi small{color:var(--cinza);font-size:12px;text-transform:uppercase;letter-spacing:.05em}.kpi div{font-family:Georgia,serif;font-size:28px;color:var(--navy)}
 .funil{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.chip{border:1px solid var(--linha);background:#fff;border-radius:999px;padding:6px 14px;font-size:13px;cursor:pointer}.chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
 .bar{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 14px}.bar input{flex:1;min-width:200px;margin:0}
@@ -55,7 +55,7 @@ function esqueci(prefill){app.textContent="";
  app.appendChild(f);f.e.focus();}
 function login(msg){app.textContent="";var f=el("form",{class:"login"},[el("h1",{text:"Habivah"}),el("p",{text:"Painel de leads — acesso restrito."}),
  el("label",{text:"E-mail"},[el("input",{type:"email",name:"e",required:"",autocomplete:"username"})]),
- el("label",{text:"Senha"},[el("input",{type:"password",name:"p",required:"",autocomplete:"current-password"})]),
+ campoSenha("Senha","p","current-password"),
  el("div",{class:"err",text:msg||""}),el("button",{class:"btn",type:"submit",text:"Entrar",style:"width:100%;margin-top:6px"}),
  el("button",{type:"button",id:"esq",text:"Esqueci minha senha / criar senha",style:"background:none;border:0;color:#5B6678;text-decoration:underline;cursor:pointer;margin-top:12px;font:inherit;font-size:13px;width:100%"})]);
  f.querySelector("#esq").onclick=function(){esqueci(f.e.value.trim());};
@@ -72,7 +72,8 @@ async function start(){
 function render(){
  app.textContent="";
  var sair=el("button",{text:"Sair"});sair.onclick=async function(){await db.auth.signOut();login();};
- app.appendChild(el("div",{class:"top"},[el("b",{text:"Habivah · Leads"}),sair]));
+ var ts=el("button",{text:"Trocar senha"});ts.onclick=function(){novaSenha(true);};
+ app.appendChild(el("div",{class:"top"},[el("b",{text:"Habivah · Leads"}),el("span",{},[ts,document.createTextNode(" "),sair])]));
  var w=el("div",{class:"wrap"});app.appendChild(w);
  var agora=Date.now(),dia=864e5;
  function n(ms){return leads.filter(function(l){return agora-new Date(l.created_at)<ms;}).length;}
@@ -123,14 +124,23 @@ function exportar(){
  var cols=["created_at","nome","imobiliaria","telefone","email","corretores","plano","status","pagina","notas"];
  var linhas=[cols.join(",")].concat(leads.map(function(l){return cols.map(function(c){return '"'+String(l[c]==null?"":l[c]).replace(/"/g,'""')+'"';}).join(",");}));
  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["﻿"+linhas.join("\n")],{type:"text/csv"}));a.download="leads-habivah.csv";a.click();}
-function novaSenha(){app.textContent="";var f=el("form",{class:"login"},[el("h1",{text:"Definir senha"}),el("p",{text:"Escolha a senha do painel (mínimo 8 caracteres)."}),
- el("label",{text:"Nova senha"},[el("input",{type:"password",name:"p",required:"",minlength:"8",autocomplete:"new-password"})]),
+function campoSenha(rotulo,nome,auto){
+ var i=el("input",{type:"password",name:nome,required:"",autocomplete:auto||"new-password"});if(!auto)i.setAttribute("minlength","8");
+ var o=el("button",{type:"button","aria-label":"Mostrar ou ocultar senha",title:"Mostrar/ocultar",text:"\ud83d\udc41"});
+ o.onclick=function(){var v=i.type==="password";i.type=v?"text":"password";o.style.opacity=v?"1":".5";};o.style.opacity=".5";
+ return el("label",{text:rotulo},[el("div",{class:"pw"},[i,o])]);}
+function novaSenha(volta){app.textContent="";
+ var f=el("form",{class:"login"},[el("h1",{text:"Definir senha"}),el("p",{text:"Escolha a senha do painel (mínimo 8 caracteres)."}),
+ campoSenha("Nova senha","p"),campoSenha("Repita a nova senha","p2"),
  el("div",{class:"err",text:""}),el("button",{class:"btn",type:"submit",text:"Salvar senha",style:"width:100%;margin-top:6px"})]);
- f.addEventListener("submit",async function(ev){ev.preventDefault();var er=f.querySelector(".err");
+ if(volta)f.appendChild(el("button",{type:"button",id:"vl",text:"Cancelar",style:"background:none;border:0;color:#5B6678;text-decoration:underline;cursor:pointer;margin-top:12px;font:inherit;font-size:13px;width:100%"}));
+ var vl=f.querySelector("#vl");if(vl)vl.onclick=function(){start();};
+ f.addEventListener("submit",async function(ev){ev.preventDefault();var er=f.querySelector(".err");er.style.color="#b3261e";
   if(f.p.value.length<8){er.textContent="Use pelo menos 8 caracteres.";return;}
+  if(f.p.value!==f.p2.value){er.textContent="As duas senhas não são iguais. Confira e tente de novo.";return;}
   var r=await db.auth.updateUser({password:f.p.value});
   if(r.error){er.textContent="Não foi possível salvar: "+r.error.message;return;}
-  history.replaceState(null,"","/admin");start();});app.appendChild(f);}
+  history.replaceState(null,"","/admin");alert("Senha salva!");start();});app.appendChild(f);f.p.focus();}
 var recuperando=/type=recovery/.test(location.hash);
 db.auth.onAuthStateChange(function(ev){if(ev==="PASSWORD_RECOVERY"){recuperando=true;novaSenha();}});
 if(!recuperando)start();
