@@ -20,7 +20,7 @@
 <script src="/pixel.js" defer></script>
 <script src="/lead.js" defer></script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Habivah","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://habivah.com/","description":"Sistema para imobiliárias: CRM, site com blog automático, atendente de WhatsApp com IA e cadastro inteligente de imóveis com IA.","offers":{"@type":"AggregateOffer","priceCurrency":"BRL","lowPrice":"5000","highPrice":"10000"}}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Habivah","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://habivah.com/","description":"Sistema para imobiliárias: CRM, site com blog automático, atendente de WhatsApp com IA e cadastro inteligente de imóveis com IA."}
 </script>
 </head>
 <body>
@@ -117,6 +117,21 @@
         <h3>Seus dados, só seus</h3>
         <p>Cada imobiliária isolada das demais. Dados do proprietário e comissão visíveis só para o administrador. Papéis para admin, gerente e corretor.</p>
       </article>
+      <article class="card">
+        <div class="ico">🎨</div>
+        <h3>O visual do jeito que você quiser</h3>
+        <p>Escreva em português o que quer mudar, como “deixe o site azul-marinho e dourado e troque o título da página inicial”, e a IA aplica. Você vê a prévia antes, aprova e pode desfazer depois. É só ter crédito.</p>
+      </article>
+      <article class="card">
+        <div class="ico">🧠</div>
+        <h3>Assistente de IA dentro do painel</h3>
+        <p>Pergunte “quais leads chegaram hoje?” ou “mostre casas de 4 quartos até R$ 2 milhões” e receba a resposta na hora. Ela também muda o status de um lead, ajusta preço e agenda visita, sempre pedindo a sua confirmação.</p>
+      </article>
+      <article class="card">
+        <div class="ico">🔔</div>
+        <h3>Cliente certo, imóvel certo</h3>
+        <p>Quando entra um imóvel que combina com o que um cliente procura, ele recebe o aviso. Follow-up automático para quem parou de responder, e-mail semanal com as novidades e aviso ao corretor quando um lead esquenta.</p>
+      </article>
     </div>
   </div>
 </section>
@@ -196,11 +211,12 @@
 <section id="planos" class="secao">
   <div class="wrap">
     <p class="kicker">Planos</p>
-    <h2>Sem mensalidade. Você paga a implantação e só o que usar.</h2>
+    <h2>Sem mensalidade. Você paga a instalação uma vez e depois só o que usar.</h2>
+    <p class="nota-planos" style="margin-top:0;margin-bottom:28px">1. <b>Instalação:</b> montamos o seu site, o CRM e as automações com a sua marca e importamos a sua base. 2. <b>Uso:</b> você só gasta créditos quando a inteligência artificial trabalha para você. Os valores são sob consulta: fale com a gente e receba uma proposta para o tamanho da sua imobiliária.</p>
     <div class="planos">
       <article class="plano">
         <h3>Essencial</h3>
-        <p class="preco"><small>R$</small>5.000<span>implantação</span></p>
+        <p class="preco preco-txt">Sob consulta<span>instalação única</span></p>
         <p class="pdesc">Para a imobiliária que quer site, CRM e conteúdo funcionando sozinhos.</p>
         <ul>
           <li>Site com a sua marca, pronto para o Google</li>
@@ -215,7 +231,7 @@
       <article class="plano destaque">
         <p class="tag">Mais escolhido</p>
         <h3>Completo</h3>
-        <p class="preco"><small>R$</small>10.000<span>implantação</span></p>
+        <p class="preco preco-txt">Sob consulta<span>instalação única</span></p>
         <p class="pdesc">O sistema inteiro com a sua marca, como se fosse seu.</p>
         <ul>
           <li>Tudo do Essencial</li>
@@ -230,7 +246,7 @@
       </article>
       <article class="plano">
         <h3>Créditos de uso</h3>
-        <p class="preco"><small>R$</small>1<span>por crédito</span></p>
+        <p class="preco preco-txt">Por uso<span>em créditos</span></p>
         <p class="pdesc">A inteligência artificial trabalha e você paga só pelo que ela fez.</p>
         <ul>
           <li>Atendimento de um lead pela IA no WhatsApp: 1 crédito</li>
@@ -238,12 +254,13 @@
           <li>Cadastro inteligente de imóvel: 1 crédito</li>
           <li>Post de blog completo, com capa: 3 créditos</li>
           <li>E-mail semanal de novidades: 1 crédito a cada 10 e-mails</li>
+          <li>Personalizar o visual e o sistema com IA: pague com créditos</li>
           <li>Créditos não vencem enquanto a conta estiver ativa</li>
         </ul>
-        <a class="btn btn-linha" href="#faq">Como funcionam os créditos</a>
+        <a class="btn btn-linha" href="https://wa.me/5511915190774?text=Quero%20saber%20o%20valor%20dos%20cr%C3%A9ditos%20do%20Habivah." target="_blank" rel="noopener">Consultar valores</a>
       </article>
     </div>
-    <p class="nota-planos">Hospedagem e manutenção a partir do 2º ano: R$ 600 por ano (condição de lançamento). Você controla o consumo no painel: liga e desliga cada automação, define limites e recebe aviso quando o saldo estiver acabando. Alterações e funções novas sob medida são orçadas à parte.</p>
+    <p class="nota-planos">O 1º ano de hospedagem e manutenção já vem na instalação. Você controla o consumo no painel: liga e desliga cada automação, define limites e recebe aviso quando o saldo estiver acabando. Alterações e funções novas sob medida são orçadas à parte.</p>
     <div class="wl">
       <div>
         <h3>White-label</h3>
@@ -273,9 +290,10 @@
     <details><summary>A atendente de IA substitui o corretor?</summary><p>Não. Ela responde na hora, organiza o que o cliente quer e entrega o lead pronto para o corretor. A venda continua sendo do corretor.</p></details>
     <details><summary>Consigo trazer meus imóveis e clientes de outro sistema?</summary><p>Sim. Importamos imóveis, leads e corretores a partir de planilha ou exportação do sistema atual.</p></details>
     <details><summary>Meus dados ficam separados das outras imobiliárias?</summary><p>Sim. Cada imobiliária tem seus dados isolados, e informações sensíveis como proprietário e comissão ficam visíveis só para o administrador.</p></details>
-    <details><summary>Tem mensalidade?</summary><p>Não. Você paga a implantação uma vez, com o 1º ano de hospedagem e manutenção incluso. A partir do 2º ano, a hospedagem custa R$ 600 por ano. O resto é por uso, em créditos.</p></details>
-    <details><summary>Como funcionam os créditos?</summary><p>Cada crédito custa R$ 1 e é consumido só quando a IA trabalha: um atendimento no WhatsApp, um follow-up ou um cadastro de imóvel custam 1 crédito; um post de blog custa 3; o e-mail semanal custa 1 crédito a cada 10 e-mails. Você compra pacotes quando quiser e os créditos não vencem enquanto a conta estiver ativa. Se o saldo acabar, as automações pausam e o CRM e o site continuam funcionando.</p></details>
+    <details><summary>Tem mensalidade?</summary><p>Não. Você paga a instalação uma vez, com o 1º ano de hospedagem e manutenção incluso. Depois disso, é só por uso, em créditos, e uma renovação anual da hospedagem. Os valores são sob consulta: <a href="https://wa.me/5511915190774?text=Quero%20saber%20os%20valores%20do%20Habivah." target="_blank" rel="noopener">fale com a gente</a>.</p></details>
+    <details><summary>Como funcionam os créditos?</summary><p>Os créditos são consumidos só quando a IA trabalha: um atendimento no WhatsApp, um follow-up ou um cadastro de imóvel custam 1 crédito; um post de blog custa 3; o e-mail semanal custa 1 crédito a cada 10 e-mails. Você compra pacotes quando quiser e os créditos não vencem enquanto a conta estiver ativa. Se o saldo acabar, as automações pausam e o CRM e o site continuam funcionando.</p></details>
     <details><summary>Consigo controlar quanto vou gastar?</summary><p>Sim. No painel você liga e desliga cada automação, limita quantos follow-ups cada lead recebe, escolhe quem recebe o e-mail semanal e é avisado quando o saldo estiver acabando.</p></details>
+    <details><summary>Posso deixar o site e o sistema com a minha cara?</summary><p>Sim. Além de escolher entre os modelos de site, você pede à IA em português o que quer mudar: cores, tema, textos da página inicial, as colunas do funil, a regra de distribuição de leads, o blog e o jeito que a atendente fala com os clientes. Você vê a prévia, aprova e pode desfazer. Cada pedido usa créditos.</p></details>
     <details><summary>E se eu quiser uma função nova ou uma alteração?</summary><p>A gente orça e desenvolve para você. Pedidos pequenos podem ser pagos com créditos; projetos maiores têm orçamento fechado.</p></details>
     <details><summary>O site já vem otimizado para o Google?</summary><p>Sim. Cada imóvel, bairro, condomínio e post é publicado com título, meta-descrição e texto pensados no que as pessoas buscam, e os buscadores são avisados na hora quando algo novo entra no ar.</p></details>
   </div>

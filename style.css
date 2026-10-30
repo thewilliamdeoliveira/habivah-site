@@ -169,3 +169,5 @@ details p{color:var(--cinza);margin-top:10px}
 @media (max-width:960px){.posts,.posts.dois{grid-template-columns:1fr}}
 
 .nota-planos{margin-top:20px;font-size:14px;color:var(--cinza);max-width:760px}
+
+.preco.preco-txt{font-size:32px;line-height:1.15}
