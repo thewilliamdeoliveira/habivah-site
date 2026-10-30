@@ -6,10 +6,10 @@
 <title>Proposta comercial — Habivah</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0B1F3A">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <script src="/pixel.js" defer></script>
 <script src="/lead.js" defer></script>
@@ -18,9 +18,9 @@
      ?imobiliaria=Nome&contato=Fulano&plano=completo|essencial&creditos=200&validade=2026-11-15&obs=texto
      Nada é gravado em lugar nenhum: a página só monta o texto a partir da URL. */
   .prop{width:min(820px,100% - 32px);margin:0 auto;padding:48px 0 80px}
-  .prop h1{font-family:'Playfair Display',Georgia,serif;font-size:34px;margin:0 0 4px}
+  .prop h1{font-weight:800;letter-spacing:-.03em;font-size:34px;margin:0 0 4px}
   .prop .sub{color:var(--cinza);margin:0 0 28px}
-  .cab{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;border-bottom:2px solid var(--ouro);padding-bottom:18px;margin-bottom:28px}
+  .cab{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;border-bottom:2px solid var(--navy);padding-bottom:18px;margin-bottom:28px}
   .cab .para{font-size:14px;color:var(--cinza);text-align:right}
   .cab .para b{color:var(--tinta);font-size:16px;display:block}
   .bloco{margin:0 0 26px}
@@ -30,8 +30,8 @@
   table.preco th,table.preco td{padding:10px 8px;border-bottom:1px solid var(--linha);text-align:left}
   table.preco th{color:var(--cinza);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
   table.preco td.v{text-align:right;white-space:nowrap;font-weight:600}
-  .total{display:flex;justify-content:space-between;align-items:baseline;background:var(--suave);border-radius:12px;padding:16px 18px;margin-top:12px}
-  .total .n{font-family:'Playfair Display',Georgia,serif;font-size:28px;color:var(--navy)}
+  .total{display:flex;justify-content:space-between;align-items:baseline;background:var(--nevoa);border-radius:16px;padding:16px 18px;margin-top:12px}
+  .total .n{font-weight:800;letter-spacing:-.03em;font-size:28px;color:var(--navy)}
   .mini{font-size:13px;color:var(--cinza);line-height:1.6}
   .editor{background:var(--suave);border:1px dashed var(--linha);border-radius:12px;padding:14px 16px;margin-bottom:28px;font-size:14px}
   .editor label{display:block;font-weight:600;margin:8px 0 2px}
@@ -45,9 +45,9 @@
 <body>
 <header class="topo">
   <div class="wrap topo-in">
-    <a href="/" class="marca" aria-label="Habivah — início"><span>Habivah</span></a>
+    <a href="/" class="marca" aria-label="Habivah — início"><img src="/assets/brand/logo-neg.svg" alt="habivah" width="119" height="26"></a>
     <nav class="menu" aria-label="Principal"><a href="/#planos">Planos</a><a href="/ajuda">Ajuda</a></nav>
-    <button class="btn btn-ouro btn-sm noprint" onclick="window.print()">Imprimir / salvar PDF</button>
+    <button class="btn btn-pri btn-sm noprint" onclick="window.print()">Imprimir / salvar PDF</button>
   </div>
 </header>
 <main class="prop">

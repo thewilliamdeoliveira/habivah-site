@@ -198,7 +198,7 @@ async function avisar(p: { titulo: string; slug: string; status: string; palavra
   const key = Deno.env.get("HABIVAH_BREVO_API_KEY")?.trim();
   if (!key) return;
   const link = `https://habivah.com/blog/${p.slug}`;
-  const html = `<div style="font-family:Inter,Arial,sans-serif;font-size:15px;color:#14213A"><h2 style="margin:0 0 10px">${p.status === "publicado" ? "Novo artigo publicado" : "Novo rascunho para revisar"}</h2>
+  const html = `<div style="font-family:Manrope,Arial,sans-serif;font-size:15px;color:#0B1F3A"><h2 style="margin:0 0 10px">${p.status === "publicado" ? "Novo artigo publicado" : "Novo rascunho para revisar"}</h2>
 ${p.capa ? `<img src="${esc(p.capa)}" alt="" style="max-width:100%;border-radius:10px">` : ""}
 <p><b>${esc(p.titulo)}</b></p><p>Tipo: ${p.tipo === "tendencia" ? "novidade de tecnologia da semana" : "palavra mais buscada"} · Palavra-chave: ${esc(p.palavra)} — ${p.volume} buscas/mês, dificuldade ${p.kd ?? "?"}/100</p>
 <p><a href="${p.status === "publicado" ? link : "https://habivah.com/admin"}">${p.status === "publicado" ? "Ver no site" : "Revisar no painel"}</a></p></div>`;
