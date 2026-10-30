@@ -4,3 +4,5 @@
   X-Frame-Options: SAMEORIGIN
 /style.css
   Cache-Control: public, max-age=3600
+/pixel.js
+  Cache-Control: public, max-age=3600

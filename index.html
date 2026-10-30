@@ -17,6 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
+<script src="/pixel.js" defer></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Habivah","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://habivah.com/","description":"Sistema para imobiliárias: CRM, site com blog automático, atendente de WhatsApp com IA e cadastro inteligente de imóveis com IA.","offers":{"@type":"AggregateOffer","priceCurrency":"BRL","lowPrice":"5000","highPrice":"10000"}}
 </script>
@@ -327,7 +328,7 @@ document.getElementById("ano").textContent=new Date().getFullYear();
     try{
       var r=await fetch("https://rzsotlrmjrkslsltnntg.supabase.co/functions/v1/habivah-interesse",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({},d,{utm:utm,pagina:location.pathname+location.search}))});
       var j=await r.json().catch(function(){return {}});
-      if(r.ok && j.ok){ f.reset(); msg.textContent="Recebido! Vamos falar com você em breve pelo WhatsApp."; }
+      if(r.ok && j.ok){ if(window.fbq) fbq("track","Lead",{content_name:"demo-form"}); f.reset(); msg.textContent="Recebido! Vamos falar com você em breve pelo WhatsApp."; }
       else { msg.textContent=j.error||"Não foi possível enviar agora. Chame no WhatsApp."; btn.disabled=false; }
     }catch(e){ msg.textContent="Sem conexão agora. Chame no WhatsApp."; btn.disabled=false; }
   });
